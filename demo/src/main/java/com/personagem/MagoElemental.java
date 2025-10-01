@@ -18,8 +18,10 @@ public class MagoElemental extends Ranqueados {
         this.setRupturas(0);
     }
 
-    public MagoElemental() {
-
+    public MagoElemental(int id, String codinome, int vidaMax, int manaMax, String foco, int poderBase, int resistencia, int controlador, int alto) {
+        this(id, codinome, "Elemental", vidaMax, manaMax, foco, poderBase, resistencia, controlador, 2, 0, 0, 0, 0, 0, 0, alto);
     }
-
+    public int getAlto(){
+        return this.alto;
+    }
 }

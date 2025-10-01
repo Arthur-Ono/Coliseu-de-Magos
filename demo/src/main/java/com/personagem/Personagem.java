@@ -16,8 +16,6 @@ public class Personagem {
     private int horaEntrada;
     private int vidaAtual = vidaMax;
 
-    private ArrayList<Personagem> personagens = new ArrayList<>();
-
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
             int resistencia, int controlador, int horaEntrada) {
         this.id = id;
@@ -123,26 +121,6 @@ public class Personagem {
         this.horaEntrada = horaEntrada;
     }
 
-    public void adicionar(Personagem personagem) {
-        personagens.add(personagem);
-    }
-
-    public void imprimir() {
-
-        System.out.println("----------------");
-        System.out.println("id: " + id);
-        System.out.println("Codinome: " + codinome);
-        System.out.println("Escola: " + escola);
-        System.out.println("Vida máxima: " + vidaMax);
-        System.out.println("Mana máxima: " + manaMax);
-        System.out.println("Foco: " + foco);
-        System.out.println("Poder base: " + poderBase);
-        System.out.println("Resistência Mágica: " + resistencia);
-        System.out.println("Controlador: " + controlador);
-        System.out.println("Hora de entrada na area: " + horaEntrada);
-
-    }
-
     public void receberDano(int poderBase) {
     }
 
@@ -155,5 +133,21 @@ public class Personagem {
         System.out.println("----------------------");
         System.out.println("Vida atual do " + getCodinome()+": "+getVidaAtual());
     }
-    
+
+    @Override
+    public String toString() {
+        return "----------------\n" +
+                "ID: " + id + "\n" +
+                "Codinome: " + codinome + "\n" +
+                "Escola: " + escola + "\n" +
+                "Vida Máxima: " + vidaMax + "\n" +
+                "Mana Máxima: " + manaMax + "\n" +
+                "Foco: " + foco + "\n" +
+                "Poder Base: " + poderBase + "\n" +
+                "Resistência Mágica: " + resistencia + "\n" +
+                "Controlador: " + controlador + "\n" +
+                "Hora de Entrada: " + horaEntrada + "\n" +
+                "----------------";
+    }
+
 }
