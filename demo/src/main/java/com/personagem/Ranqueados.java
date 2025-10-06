@@ -1,5 +1,7 @@
 package com.personagem;
 
+import java.util.ArrayList;
+
 public class Ranqueados extends Personagem {
 
     // atributos de ranking
@@ -16,6 +18,8 @@ public class Ranqueados extends Personagem {
     private int contadorMitigado;
     private int contadorDanoRecebido;
     private int contadorUltimoAtacante;
+
+    
 
     public int getContadorAbate() {
         return contadorAbate;
@@ -105,7 +109,6 @@ public class Ranqueados extends Personagem {
         this.contadorUltimoAtacante = contadorUltimoAtacante;
     }
 
-
     public Ranqueados(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
             int resistencia, int controlador, int horaEntrada, int abates, int assistencias, int danoCausado,
             int danoMitigado, int rupturas, int capturas) {
@@ -147,14 +150,13 @@ public class Ranqueados extends Personagem {
         // lembrar que são referentes QUEM ESTÁ ATACANDO
 
         setContadorDano(getContadorDano() + x);
-        setContadorUltimoAtacante(x);
         System.out.println("Dano causado total :" + contadorDano);
 
     }
-    
+
     public void causarDano(Ranqueados alvo) {
         System.out.println("Mago " + super.getCodinome() + " ataca o mago " + alvo.getCodinome());
-        //registra o ultimo atacante
+        // registra o ultimo atacante
         alvo.setContadorUltimoAtacante(this.getId());
         // ataca ne
         alvo.receberDano(this.getPoderBase());
@@ -164,11 +166,22 @@ public class Ranqueados extends Personagem {
         }
     }
 
-    public void incrementarRanking(Ranqueados alvo) {
+    public void incrementarRanking(Ranqueados alvo, ArrayList<Ranqueados> todosMagos) {
         // incremento de abate
         if (alvo.getContadorAbate() == 1) {
             setAbates(getAbates() + 1);
+            int idAssistente = alvo.getContadorUltimoAtacante();
+            if (idAssistente != -1 && idAssistente != this.getId()) {
+                for (Ranqueados mago : todosMagos) {
+                    if (mago.getId() == idAssistente) {
+                        mago.setAssistencias(mago.getAssistencias() + 1);
+                        break;
+                    }
+                }
+            }
+
             alvo.contadorAbate = 0;
+            alvo.setContadorUltimoAtacante(-1);
         }
         // incrementa o dano causado
         setDanoCausado(getDanoCausado() + getContadorDano());
@@ -196,5 +209,4 @@ public class Ranqueados extends Personagem {
         System.out.println("Rupturas de canalização: " + rupturas);
     }
 
-    
 }

@@ -3,7 +3,7 @@ package com.Menu;
 import java.util.List;
 import java.util.Scanner;
 
-
+import com.personagem.MagoElemental;
 import com.personagem.Personagem;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.csv.GerenciadorCSV;
