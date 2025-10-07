@@ -106,8 +106,6 @@ public class Menu {
         System.out.print("Digite o Controlador (1 para Humano, 2 para IA): ");
         int controlador = scan.nextInt();
 
-        System.out.print("Digite o valor para 'alto': ");
-        int alto = scan.nextInt();
         scan.nextLine();
 
         //Criação da variável mago antes do switch para que ele não "morra no switch"
