@@ -1,8 +1,22 @@
 package com.personagem;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.feitico.Magia;
+
 
 public class Ranqueados extends Personagem {
+
+
+    // onde guardar as magias :p
+    private List<Magia> grimorio = new ArrayList<Magia>();
+    public void adicionarMagia(Magia magia){
+        grimorio.add(magia);
+    }
+    public List<Magia> getGrimorio(){
+        return grimorio;
+    }
 
     // atributos de ranking
     private int abates;
@@ -154,12 +168,22 @@ public class Ranqueados extends Personagem {
 
     }
 
-    public void causarDano(Ranqueados alvo) {
+    public void causarDano(Ranqueados alvo, Magia magiaseleciona) {
         System.out.println("Mago " + super.getCodinome() + " ataca o mago " + alvo.getCodinome());
         // registra o ultimo atacante
         alvo.setContadorUltimoAtacante(this.getId());
+
+        // calcula o dano referente a magia, e se nao tiver/selecionar magia, usa ataque básico 
+        int dano;
+        if (magiaseleciona !=null) {
+            dano = magiaseleciona.calcularDano(this.getEscola());
+        }
+        else{
+            dano = this.getPoderBase();
+        }
+
         // ataca ne
-        alvo.receberDano(this.getPoderBase());
+        alvo.receberDano(dano);
         if (alvo.getContadorAbate() == 1) {
             setAbates(getAbates() + 1);
             alvo.contadorAbate = 0;
