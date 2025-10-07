@@ -12,7 +12,7 @@ public class Canalizado extends Magia {
 
     @Override
     public int calcularDano(String classeMago) {
-        int dano = getDanoBase();
+        int dano = getDanoBase()+(40*getDanoBase())/100;
         if ("Elemental".equalsIgnoreCase(classeMago)) {
             if (((dano/4)-5)<=0) {
                 dano=1;

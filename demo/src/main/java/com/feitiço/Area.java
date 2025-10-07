@@ -13,7 +13,7 @@ public class Area extends Magia {
 
     @Override
     public int calcularDano(String classeMago) {
-        int dano = getDanoBase();
+        int dano = getDanoBase()+(15*getDanoBase())/100;
         if ("Elemental".equalsIgnoreCase(classeMago)) {
             dano += 10;
         }

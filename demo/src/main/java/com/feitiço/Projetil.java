@@ -14,7 +14,7 @@ public class Projetil extends Magia {
 
     @Override
     public int calcularDano(String classeMago) {
-        int dano = getDanoBase();
+        int dano = getDanoBase()+(25*getDanoBase())/100;
         if ("Arcano".equalsIgnoreCase(classeMago)) {
             dano+=10;
         }
