@@ -134,6 +134,12 @@ public class Personagem {
         System.out.println("Vida atual do " + getCodinome()+": "+getVidaAtual());
     }
 
+    
+
+
+
+
+
     @Override
     public String toString() {
         return "----------------\n" +
