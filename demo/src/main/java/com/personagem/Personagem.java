@@ -156,4 +156,12 @@ public abstract class Personagem {
                "Hora de Entrada: " + horaEntrada + "\n" +
                "----------------";
     }
+
+    public int getManaAtual() {
+        return manaAtual;
+    }
+
+    public void setManaAtual(int manaAtual) {
+        this.manaAtual = manaAtual;
+    }
 }

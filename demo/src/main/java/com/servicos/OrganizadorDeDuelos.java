@@ -6,9 +6,9 @@ import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.*;
 import com.Mapas.GerenciadorDeArenas;
-import com.personagem.Personagem;
+
 import com.personagem.Ranqueados;
-import com.feitico.Magia; // Import necessário para a nova lógica de dano
+
 
 public class OrganizadorDeDuelos extends Servicos {
 
@@ -155,7 +155,7 @@ public class OrganizadorDeDuelos extends Servicos {
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
             
-            Personagem magoSelecionado = this.gerenciador.buscarPorId(idMago);
+            Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
 
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado.");

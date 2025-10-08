@@ -3,13 +3,13 @@ package com.Menu;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList; // Import necessário para a correção do agendamento
-import com.personagem.Personagem;
+
 import com.personagem.Ranqueados;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.csv.GerenciadorCSV;
 import com.servicos.*; // Importa todos os serviços
 import com.Agenda.*;   // Importa as classes da Agenda
-import com.Mapas.*;    // Importa as classes dos Mapas
+//import com.Mapas.*;    // Importa as classes dos Mapas
 
 public class Menu {
 
@@ -80,7 +80,7 @@ public class Menu {
                     System.out.println("Magos salvos com sucesso em " + NOME_ARQUIVO);
                     break;
                 case 6: 
-                    List<Personagem> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
+                    List<Ranqueados> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
                     // Atualiza a lista principal do jogo com os magos carregados do arquivo.
                     gerenciador.setListaDeMagos(magosCarregados);
                     System.out.println("Magos carregados com sucesso de " + NOME_ARQUIVO);
@@ -120,10 +120,10 @@ public class Menu {
                     System.out.println("Iniciando duelo agendado na arena: " + ag.getArena().getNome());
                     
                     List<Ranqueados> time1Agendado = new ArrayList<>();
-                    for(Personagem p : ag.getTime1()) { time1Agendado.add((Ranqueados) p); }
+                    for(Ranqueados p : ag.getTime1()) { time1Agendado.add((Ranqueados) p); }
 
                     List<Ranqueados> time2Agendado = new ArrayList<>();
-                    for(Personagem p : ag.getTime2()) { time2Agendado.add((Ranqueados) p); }
+                    for(Ranqueados p : ag.getTime2()) { time2Agendado.add((Ranqueados) p); }
                     
                     // Agora sim, chamamos o método com os tipos corretos.
                     organizadorDeDuelos.iniciarDuelo(time1Agendado, time2Agendado, ag.getArena());
