@@ -3,7 +3,6 @@ package com.Menu;
 import java.util.List;
 import java.util.Scanner;
 
-import com.personagem.MagoElemental;
 import com.personagem.Ranqueados;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.csv.GerenciadorCSV;
@@ -11,7 +10,6 @@ import com.servicos.BuscadorDeMagos;
 import com.servicos.CriadorDeMagos;
 import com.servicos.ListadorDeMagos;
 import com.servicos.OrganizadorDeDuelos;
-import com.personagem.Ranqueados;
 public class Menu {
 
     Scanner scan = new Scanner(System.in);

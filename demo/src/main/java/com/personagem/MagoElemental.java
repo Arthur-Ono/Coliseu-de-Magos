@@ -2,11 +2,11 @@ package com.personagem;
 
 public class MagoElemental extends Ranqueados {
 
-    private int alto;
+    
 
-    public MagoElemental(int id, String codinome, int vidaMax, int manaMax, String foco, int poderBase, int resistencia, int controlador, int alto) {
+    public MagoElemental(int id, String codinome, int vidaMax, int manaMax, String foco, int poderBase, int resistencia, int controlador, int velocidade) {
         super(id, codinome, "Elemental", vidaMax, manaMax, foco, poderBase, resistencia, controlador, 2, 0, 0, 0, 0, 0, 0, 0);
-        this.alto = alto;
+        this.setVelocidade(velocidade);
         this.setEscola("Elemental");
         this.setAbates(0);
         this.setCapturas(0);
@@ -14,8 +14,5 @@ public class MagoElemental extends Ranqueados {
         this.setDanoMitigado(0);
         this.setAssistencias(0);
         this.setRupturas(0);
-    }
-    public int getAlto(){
-        return this.alto;
     }
 }

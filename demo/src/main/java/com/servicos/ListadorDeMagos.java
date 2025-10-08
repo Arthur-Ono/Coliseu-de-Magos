@@ -3,9 +3,7 @@ package com.servicos;
 import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
-import com.personagem.Personagem;
 import com.personagem.Ranqueados;
-import com.servicos.Servicos;
 public class ListadorDeMagos extends Servicos {
 
     

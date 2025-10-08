@@ -103,6 +103,7 @@ public class OrganizadorDeDuelos extends Servicos {
 
             for(Ranqueados atacante: ordemTurno){
                 if (atacante.getVidaAtual()>0) {
+                    System.out.println("Atacante "+ atacante.getCodinome());
                     System.out.println("Escolha sua ação:\n (1) Atacar\n (2) Defender");
                     int acao = scanner.nextInt();
                     if (acao ==1){

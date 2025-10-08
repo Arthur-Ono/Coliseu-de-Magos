@@ -40,13 +40,6 @@ public class GerenciadorCSV {
                 //Pega o nome da classe do mago (MagoElemental, MagoArcano, etc) e escreve no CSV
                 //Porque o getSimple? Pra pegar apenas o nome da classe, em string, e não o objetivo inteiro.
                 //Porque isso? pra não dar aquela desgraça de "class com.personagem.MagoElemental"
-                if (mago instanceof MagoElemental) {
-                    //verifica se o mago é uma instância de MagoElemental antes de tentar acessar o método getAlto()
-                    linha.append(",").append(((MagoElemental) mago).getAlto());
-                    //Após escrever uma vírgula, é feito um Type Cast (transformação de tipo) do mago, que é do tipo personagem, para MagoElemental
-                } else {
-                    linha.append(",0");
-                }
                 
                 writer.write(linha.toString());
                 //Transforma a "caixa de texto" em uma string e escreve no arquivo
