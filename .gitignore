@@ -1,0 +1,54 @@
+
+**Prioridade 1 (A Base de Tudo): Generalizar o Duelo para XvX**
+
+* **Objetivo:** Transformar seu esqueleto de duelo 1v1 em um sistema que suporte equipes. Isso é a base para 2v2 e 3v3.
+* **Por que primeiro?** Sem um sistema de batalha em equipe, nenhuma das outras funcionalidades (IA, estados, etc.) faz sentido.
+
+* **Sua Lista de Deveres:**
+    1.  **Mude a assinatura do método:** Em vez de `iniciarDuelo(id1, id2)`, crie um método mais flexível no seu `Menu`: `private void iniciarDuelo(List<Personagem> time1, List<Personagem> time2)`.
+    2.  **Crie a lógica de seleção de times:** No `Menu`, crie uma opção "Iniciar Duelo 2v2" e "Iniciar Duelo 3v3". Para cada uma:
+        * Peça os IDs dos 2 (ou 3) magos do time 1. Use seu método `buscarPorId` para pegar cada objeto e adicioná-los a uma `List<Personagem> time1`.
+        * Faça o mesmo para o time 2.
+        * Chame o método `iniciarDuelo(time1, time2)`.
+    3.  **Adapte o Loop de Batalha:**
+        * A condição de vitória agora é um `while` que continua enquanto ambos os times tiverem pelo menos um mago vivo. Você precisará de um método auxiliar como `private boolean timeEstaVivo(List<Personagem> time)`, que percorre a lista e retorna `true` se alguém tiver `vidaAtual > 0`.
+    4.  **"Quantidade de inimigos em campo":** Este requisito é resolvido aqui. Dentro do duelo, você sempre sabe a quantidade de inimigos usando `time1.size()` e `time2.size()`.
+
+**Prioridade 2 (A Funcionalidade Essencial): Implementar a IA "Burra"**
+
+* **Objetivo:** Fazer com que os magos inimigos possam lutar sozinhos. Sem isso, um duelo 2v2 ou 3v3 seria injogável para uma pessoa só.
+* **Por que agora?** É a próxima peça mais crítica para ter um jogo funcional.
+
+* **Sua Lista de Deveres (dentro do loop de `iniciarDuelo`):**
+    1.  **Lógica de Turno:** O seu loop de batalha agora deve percorrer **todos** os personagens vivos, um de cada vez.
+    2.  **Verificar Controlador:** No turno de um mago, verifique o atributo dele: `if (magoAtual.getControlador() == 2) { // É uma IA }`.
+    3.  **Implementar a IA "Zumbi" (A mais simples possível):**
+        * Se for uma IA, a lógica dela será: **"Atacar o inimigo vivo com a menor quantidade de vida atual."**
+        * Você precisará de um método auxiliar como `private Personagem encontrarAlvoMaisFraco(List<Personagem> timeInimigo)`. Este método percorre a lista de inimigos e retorna o objeto com o menor `getVidaAtual()`.
+        * Uma vez que a IA encontrou o alvo, ela chama o método de dano: `magoAtual.causarDano(alvoMaisFraco);`.
+
+**Prioridade 3 (O "Sabor" do Jogo): Estado do Mago e Condição de Campo**
+
+* **Objetivo:** Adicionar as camadas de complexidade exigidas.
+* **Por que agora?** Porque elas são **modificadores** do sistema de batalha que você já construiu nas prioridades 1 e 2.
+
+* **Sua Lista de Deveres (implementações SIMPLIFICADAS):**
+    1.  **Estado do Mago:**
+        * Adicione um atributo na classe `Personagem`: `private String estado = "Normal";` (com getter e setter).
+        * No início do turno de um mago no seu loop de duelo, verifique o estado dele. Ex: `if (magoAtual.getEstado().equals("Atordoado")) { System.out.println(magoAtual.getCodinome() + " está atordoado e perdeu o turno!"); continue; }`.
+        * **Coordene com seu amigo:** A lógica de *aplicar* o estado (ex: `alvo.setEstado("Atordoado")`) deve ficar dentro dos métodos de dano dele.
+    2.  **Condição de Campo:**
+        * No início do `iniciarDuelo`, sorteie uma condição. Ex: `String condicao = "Tempestade";`.
+        * **Coordene com seu amigo:** Mude a assinatura do método de dano para receber a condição: `causarDano(Personagem alvo, String condicaoDeCampo)`. A lógica de como a condição afeta o dano (`if (condicao.equals("Tempestade")) { danoFinal *= 1.2; }`) fica com ele. Você só precisa passar a variável.
+
+**Prioridade 4 (A Funcionalidade de Suporte): Agendamento de Duelos**
+
+* **Objetivo:** Implementar o sistema de agendamento.
+* **Por que por último?** Porque os duelos precisam existir e funcionar antes de poderem ser agendados.
+
+* **Sua Lista de Deveres (implementação SIMULADA, não em tempo real):**
+    1.  Crie uma opção no menu "Agendar Duelo". Ela vai pedir os IDs dos times e um **número de turno** para o duelo começar (ex: "começar daqui a 5 turnos").
+    2.  Guarde esses agendamentos em uma lista.
+    3.  No seu `menuPrincipal`, adicione uma opção "7. Passar o Turno Global".
+    4.  Crie uma variável global `int turnoAtual = 0;`. Toda vez que o usuário escolher "Passar o Turno", incremente `turnoAtual++`.
+    5.  Após passar o turno, verifique a lista de agendamentos. Se algum agendamento tiver `turnoParaComecar == turnoAtual`, inicie aquele duelo automaticamente.
