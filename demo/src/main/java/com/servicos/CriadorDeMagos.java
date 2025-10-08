@@ -204,17 +204,19 @@ public class CriadorDeMagos extends Servicos {
      * @param pontosRestantes O total de pontos que o jogador ainda tem.
      * @return A quantidade de pontos que o jogador decidiu gastar neste atributo.
      */
-    private int distribuirPontos(String nomeAtributo, int pontosRestantes) {
+    /* 
+     * 
+     private int distribuirPontos(String nomeAtributo, int pontosRestantes) {
         // Se não há mais pontos, nem pergunta, só retorna 0.
         if (pontosRestantes <= 0) {
             System.out.println("Sem pontos restantes para " + nomeAtributo + ".");
             return 0;
         }
-
+        
         System.out.println("\nPontos restantes: " + pontosRestantes);
         System.out.print("Quantos pontos para " + nomeAtributo + "? ");
         int pontosGastos = scanner.nextInt();
-
+        
         // Validação para não deixar o usuário gastar mais pontos do que tem.
         if (pontosGastos > pontosRestantes) {
             System.out.println("Você não tem pontos suficientes! Gastando o máximo possível: " + pontosRestantes);
@@ -228,4 +230,5 @@ public class CriadorDeMagos extends Servicos {
         // Retorna o número de pontos (válido) que o jogador gastou.
         return pontosGastos;
     }
+    */
 }

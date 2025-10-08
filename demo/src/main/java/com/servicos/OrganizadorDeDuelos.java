@@ -8,7 +8,6 @@ import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.*;
 import com.personagem.Ranqueados;
-import com.feitico.Magia;
 
 public class OrganizadorDeDuelos extends Servicos {
 
@@ -19,7 +18,7 @@ public class OrganizadorDeDuelos extends Servicos {
     @Override
     public void executar() {
         System.out.println("\n----- DUELO IMEDIATO -----");
-        
+
         // 1. Lógica para escolher a arena
         GerenciadorDeArenas gerenciadorArenas = new GerenciadorDeArenas();
         List<Arena> arenasDisponiveis = gerenciadorArenas.getArenas();
@@ -30,7 +29,7 @@ public class OrganizadorDeDuelos extends Servicos {
         System.out.print("Escolha uma opção de Arena: ");
         int escolhaArena = scanner.nextInt() - 1;
         scanner.nextLine();
-        
+
         if (escolhaArena < 0 || escolhaArena >= arenasDisponiveis.size()) {
             System.out.println("Arena inválida. Duelo cancelado.");
             return;
@@ -132,13 +131,12 @@ public class OrganizadorDeDuelos extends Servicos {
                             scanner.nextLine();
 
                         }
-                            
-                        Ranqueados alvo = alvosVivos.get(escolha-1);
+
+                        Ranqueados alvo = alvosVivos.get(escolha - 1);
                         atacante.causarDano(alvo);
 
-                    }
-                    else if (acao ==2) {
-                        atacante.setResistencia(atacante.getResistencia()+atacante.getResistencia()/2);
+                    } else if (acao == 2) {
+                        atacante.setResistencia(atacante.getResistencia() + atacante.getResistencia() / 2);
                     }
                 }
             }
@@ -151,14 +149,12 @@ public class OrganizadorDeDuelos extends Servicos {
             time2.forEach(p -> System.out.print(p.getCodinome() + "(" + p.getVidaAtual() + ") "));
             System.out.println();
 
-            
             // Lógica de final de turno (veneno, etc)
-            
+
             turno++;
             // Quando tu terminares o ngc de dano remove esse break aqui. ele serve só pro
             // esqueleto não ficar em loop
 
-            
         }
 
         System.out.println("\n--- FIM DO DUELO ---");
@@ -193,58 +189,38 @@ public class OrganizadorDeDuelos extends Servicos {
             }
         }
 
-        if (timeEstaVivo(time1)) {
-            for (Ranqueados mago : time1) {
-                mago.setCapturas(mago.getCapturas() + 1);
-            }
-        } else if (timeEstaVivo(time2)) {
-            for (Ranqueados mago : time2) {
-                mago.setCapturas(mago.getCapturas() + 1);
-            }
-        }
-
-        // contabilizar os rankings aqui
-        ArrayList<Ranqueados> todosMAgos = new ArrayList<>();
-        todosMAgos.addAll(time1);
-        todosMAgos.addAll(time2);
-        for (Ranqueados mago : todosMAgos) {
-            Ranqueados alvo = ultimoAlvoAtacado.get(mago);
-            if (alvo != null) {
-                mago.incrementarRanking(alvo, todosMAgos);
-            } else {
-                mago.incrementarRanking(mago, todosMAgos);
-            }
-        }
-
         System.out.println("\nPressione Enter para continuar...");
         this.scanner.nextLine();
     }
-    
+
     // Método privado para escolher um alvo
-    private Ranqueados escolherAlvo(List<Ranqueados> adversarios) {
-        List<Ranqueados> alvosVivos = new ArrayList<>();
-        System.out.println("Escolha um alvo:");
-        for (Ranqueados p : adversarios) {
-            if (p.getVidaAtual() > 0) {
-                alvosVivos.add(p);
-                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: " + p.getVidaAtual() + ")");
-            }
-        }
-
-        if (alvosVivos.isEmpty()) {
-            return null; // Não há mais alvos
-        }
-
-        System.out.print("Opção: ");
-        int escolha = scanner.nextInt();
-        scanner.nextLine();
-
-        if (escolha < 1 || escolha > alvosVivos.size()) {
-            System.out.println("Escolha inválida!");
-            return escolherAlvo(adversarios); // Pede para escolher de novo
-        }
-        return alvosVivos.get(escolha - 1);
-    }
+    /*
+     * private Ranqueados escolherAlvo(List<Ranqueados> adversarios) {
+     * List<Ranqueados> alvosVivos = new ArrayList<>();
+     * System.out.println("Escolha um alvo:");
+     * for (Ranqueados p : adversarios) {
+     * if (p.getVidaAtual() > 0) {
+     * alvosVivos.add(p);
+     * System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: "
+     * + p.getVidaAtual() + ")");
+     * }
+     * }
+     * 
+     * if (alvosVivos.isEmpty()) {
+     * return null; // Não há mais alvos
+     * }
+     * 
+     * System.out.print("Opção: ");
+     * int escolha = scanner.nextInt();
+     * scanner.nextLine();
+     * 
+     * if (escolha < 1 || escolha > alvosVivos.size()) {
+     * System.out.println("Escolha inválida!");
+     * return escolherAlvo(adversarios); // Pede para escolher de novo
+     * }
+     * return alvosVivos.get(escolha - 1);
+     * }
+     */
 
     private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
         List<Ranqueados> time = new ArrayList<>();
@@ -253,14 +229,14 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.print("Digite o ID do " + i + "º mago do Time " + numeroDoTime + ": ");
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
-            
+
             Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
 
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado.");
                 return null;
             }
-            
+
             if (!(magoSelecionado instanceof Ranqueados)) {
                 System.out.println("ERRO: O personagem selecionado não é um combatente ranqueado.");
                 return null;
@@ -270,7 +246,7 @@ public class OrganizadorDeDuelos extends Servicos {
         }
         return time;
     }
-    
+
     private boolean timeEstaVivo(List<Ranqueados> time) {
         for (Ranqueados p : time) {
             if (p.getVidaAtual() > 0) {

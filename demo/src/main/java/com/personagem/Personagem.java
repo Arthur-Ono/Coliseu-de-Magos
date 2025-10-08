@@ -15,7 +15,7 @@ public abstract class Personagem {
     private int vidaAtual = vidaMax;
     private int manaAtual = manaMax;
     private int velocidade;
-    private int manaAtual; 
+ 
 
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
                       int resistencia, int controlador, int horaEntrada, int velocidade) {
@@ -168,7 +168,4 @@ public abstract class Personagem {
 
 }
 
-    public void setManaAtual(int manaAtual) {
-        this.manaAtual = manaAtual;
-    }
-}
+   
