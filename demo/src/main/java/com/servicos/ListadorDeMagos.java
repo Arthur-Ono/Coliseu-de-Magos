@@ -1,0 +1,33 @@
+package com.servicos;
+
+import java.util.List;
+import java.util.Scanner;
+import com.GerenciadorDeMagos.Gerenciador;
+import com.personagem.Personagem;
+import com.servicos.Servicos;
+public class ListadorDeMagos extends Servicos {
+
+    
+    public ListadorDeMagos(Gerenciador gerenciador, Scanner scanner) {
+        super(scanner, gerenciador);
+    }
+
+    
+    @Override
+    public void executar() {
+        System.out.println("\n--- LISTA DE MAGOS ---");
+        // Os atributos "gerenciador" e "scanner" são herdados da classe Servicos
+        List<Personagem> magos = this.gerenciador.listarTodos();
+
+        if (magos.isEmpty()) {
+            System.out.println("Nenhum mago cadastrado no momento.");
+        } else {
+            for (Personagem mago : magos) {
+                System.out.println(mago);
+            }
+        }
+        
+        System.out.println("\nPressione Enter para voltar ao menu...");
+        scanner.nextLine();
+    }
+}
