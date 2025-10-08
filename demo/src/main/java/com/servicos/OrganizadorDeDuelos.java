@@ -138,10 +138,11 @@ public class OrganizadorDeDuelos extends Servicos {
                         }
                             
                         Ranqueados alvo = alvosVivos.get(escolha-1);
+                        atacante.causarDano(alvo);
 
-
-
-
+                    }
+                    else if (acao ==2) {
+                        atacante.setResistencia(atacante.getResistencia()+atacante.getResistencia()/2);
                     }
                 }
             }
