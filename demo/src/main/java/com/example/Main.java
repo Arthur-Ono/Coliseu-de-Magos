@@ -1,6 +1,6 @@
 package com.example;
 
-import com.personagem.Personagem;
+
 import com.GerenciadorDeMagos.Gerenciador;
 
 import com.Menu.Menu;
