@@ -6,14 +6,13 @@ public abstract class Magia {
     private int custoMana;
     private int tempoRecarga;
     private String escola;
-    private int danoBase;
+    
 
-    public Magia(String nome, int custoMana, int tempoRecarga, String escola, int danoBase) {
+    public Magia(String nome, int custoMana, int tempoRecarga, String escola) {
         this.nome = nome;
         this.custoMana = custoMana;
         this.tempoRecarga = tempoRecarga;
         this.escola = escola;
-        this.danoBase = danoBase;
     }
 
     public Magia() {
@@ -21,7 +20,7 @@ public abstract class Magia {
 
 
 
-    public abstract int calcularDano(String classeMago);
+    public abstract int calcularDano(String classeMago, int poderBase);
 
     public String getNome() {
         return nome;
@@ -55,13 +54,7 @@ public abstract class Magia {
         this.escola = escola;
     }
 
-    public int getDanoBase() {
-        return danoBase;
-    }
-
-    public void setDanoBase(int danoBase) {
-        this.danoBase = danoBase;
-    }
+  
 
     
 

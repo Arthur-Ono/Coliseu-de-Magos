@@ -14,6 +14,7 @@ public class Personagem {
     private int controlador;
     private int horaEntrada;
     private int vidaAtual = vidaMax;
+    private int manaAtual = manaMax;
     private int velocidade;
 
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
@@ -151,17 +152,25 @@ public class Personagem {
     @Override
     public String toString() {
         return "----------------\n" +
+                "Controlador: " + controlador + "\n" +
                 "ID: " + id + "\n" +
                 "Codinome: " + codinome + "\n" +
                 "Escola: " + escola + "\n" +
+                "Foco: " + foco + "\n" +
                 "Vida Máxima: " + vidaMax + "\n" +
                 "Mana Máxima: " + manaMax + "\n" +
-                "Foco: " + foco + "\n" +
                 "Poder Base: " + poderBase + "\n" +
                 "Resistência Mágica: " + resistencia + "\n" +
-                "Controlador: " + controlador + "\n" +
-                "Hora de Entrada: " + horaEntrada + "\n" +
+                "Velocidade: " + velocidade + "\n" +
                 "----------------";
+    }
+
+    public int getManaAtual() {
+        return manaAtual;
+    }
+
+    public void setManaAtual(int manaAtual) {
+        this.manaAtual = manaAtual;
     }
 
 }

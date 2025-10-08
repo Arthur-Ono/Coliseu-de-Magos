@@ -176,7 +176,7 @@ public class Ranqueados extends Personagem {
         // calcula o dano referente a magia, e se nao tiver/selecionar magia, usa ataque básico 
         int dano;
         if (magiaseleciona !=null) {
-            dano = magiaseleciona.calcularDano(this.getEscola());
+            dano = magiaseleciona.calcularDano(this.getEscola(),this.getPoderBase());
         }
         else{
             dano = this.getPoderBase();
@@ -184,10 +184,6 @@ public class Ranqueados extends Personagem {
 
         // ataca ne
         alvo.receberDano(dano);
-        if (alvo.getContadorAbate() == 1) {
-            setAbates(getAbates() + 1);
-            alvo.contadorAbate = 0;
-        }
     }
 
     public void incrementarRanking(Ranqueados alvo, ArrayList<Ranqueados> todosMagos) {
