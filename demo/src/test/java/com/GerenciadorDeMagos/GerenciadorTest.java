@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.personagem.MagoElemental;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
 
 public class GerenciadorTest {
 
@@ -22,7 +22,7 @@ public class GerenciadorTest {
     @Test
     void testeAdicionarMagoEVerificarTamanhoDaLista() {
         
-        Personagem magoDeTeste = new MagoElemental(1, "Gandalf", 100, 100, "Cajado", 50, 30, 1, 0);
+        Ranqueados magoDeTeste = new MagoElemental(1, "Gandalf", 100, 100, "Cajado", 50, 30, 1, 0);
 
     
         gerenciador.adicionar(magoDeTeste);
@@ -34,11 +34,11 @@ public class GerenciadorTest {
     @Test
     void testeBuscarMagoPorIdExistente() {
         
-        Personagem mago1 = new MagoElemental(10, "Merlin", 100, 100, "Cajado", 50, 30, 1, 0);
+        Ranqueados mago1 = new MagoElemental(10, "Merlin", 100, 100, "Cajado", 50, 30, 1, 0);
         gerenciador.adicionar(mago1);
 
         
-        Personagem magoEncontrado = gerenciador.buscarPorId(10);
+        Ranqueados magoEncontrado = gerenciador.buscarPorId(10);
 
         
         assertNotNull(magoEncontrado);
@@ -49,7 +49,7 @@ public class GerenciadorTest {
     @Test
     void testeBuscarMagoPorIdInexistente() {
         
-        Personagem magoEncontrado = gerenciador.buscarPorId(999);
+        Ranqueados magoEncontrado = gerenciador.buscarPorId(999);
 
         
         assertNull(magoEncontrado);

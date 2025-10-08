@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import com.GerenciadorDeMagos.Gerenciador;
 import com.personagem.MagoElemental;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
 import com.servicos.Servicos;
 public class CriadorDeMagos extends Servicos {
 
@@ -56,7 +56,7 @@ public class CriadorDeMagos extends Servicos {
         int controlador = scanner.nextInt();
         scanner.nextLine();
 
-        Personagem novoMago = null;
+        Ranqueados novoMago = null;
 
         switch (tipo) {
             case 1:

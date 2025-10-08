@@ -9,17 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.personagem.MagoElemental;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
 
 public class GerenciadorCSV {
 
-    public void salvar(List<Personagem> magos, String nomeArquivo) {
+    public void salvar(List<Ranqueados> magos, String nomeArquivo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             //Intancia um objeto writer da classe BufferedWriter e cria um novo arquivo para poder escrever nele
             writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,tipo,alto");
             writer.newLine();
             //Cria um cabeçalho e pula uma linha
-            for (Personagem mago : magos) {
+            for (Ranqueados mago : magos) {
                 //Foreach, normal
                 StringBuilder linha = new StringBuilder();
                 //Crie tipo uma caixa de texto editável e flexível, permitindo assim "concatenar" appends
@@ -57,8 +57,8 @@ public class GerenciadorCSV {
         }
     }
 
-    public List<Personagem> carregar(String nomeArquivo) {
-        List<Personagem> magos = new ArrayList<>();
+    public List<Ranqueados> carregar(String nomeArquivo) {
+        List<Ranqueados> magos = new ArrayList<>();
         File arquivo = new File(nomeArquivo);
 
         if (!arquivo.exists()) {
@@ -83,7 +83,7 @@ public class GerenciadorCSV {
                 String tipo = dados[10];
                 int alto = Integer.parseInt(dados[11]);
                 
-                Personagem mago = null;
+                Ranqueados mago = null;
                 switch (tipo) {
                     case "MagoElemental":
                         mago = new MagoElemental(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador, alto);
