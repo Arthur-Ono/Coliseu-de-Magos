@@ -1,4 +1,4 @@
-package com.feitiço;
+package com.feitico;
 
 
 public class Projetil extends Magia {

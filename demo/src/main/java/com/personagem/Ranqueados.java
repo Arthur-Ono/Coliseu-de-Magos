@@ -1,8 +1,22 @@
 package com.personagem;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Ranqueados extends Personagem {
+import com.feitico.Magia;
+
+
+public abstract class Ranqueados extends Personagem {
+
+
+    // onde guardar as magias :p
+    private List<Magia> grimorio = new ArrayList<Magia>();
+    public void adicionarMagia(Magia magia){
+        grimorio.add(magia);
+    }
+    public List<Magia> getGrimorio(){
+        return grimorio;
+    }
 
     // atributos de ranking
     private int abates;
@@ -110,9 +124,9 @@ public class Ranqueados extends Personagem {
     }
 
     public Ranqueados(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-            int resistencia, int controlador, int horaEntrada, int abates, int assistencias, int danoCausado,
-            int danoMitigado, int rupturas, int capturas) {
-        super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada);
+                      int resistencia, int controlador, int horaEntrada, int velocidade ,int abates, int assistencias, int danoCausado,
+                      int danoMitigado, int rupturas, int capturas) {
+        super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade);
         this.abates = abates;
         this.assistencias = assistencias;
         this.danoCausado = danoCausado;
@@ -120,9 +134,6 @@ public class Ranqueados extends Personagem {
         this.rupturas = rupturas;
         this.capturas = capturas;
     }
-
-    public Ranqueados() {
-    };
 
     public void receberDano(int poderBase) {
         int x = 0;
@@ -154,12 +165,22 @@ public class Ranqueados extends Personagem {
 
     }
 
-    public void causarDano(Ranqueados alvo) {
+    public void causarDano(Ranqueados alvo, Magia magiaseleciona) {
         System.out.println("Mago " + super.getCodinome() + " ataca o mago " + alvo.getCodinome());
         // registra o ultimo atacante
         alvo.setContadorUltimoAtacante(this.getId());
+
+        // calcula o dano referente a magia, e se nao tiver/selecionar magia, usa ataque básico 
+        int dano;
+        if (magiaseleciona !=null) {
+            dano = magiaseleciona.calcularDano(this.getEscola());
+        }
+        else{
+            dano = this.getPoderBase();
+        }
+
         // ataca ne
-        alvo.receberDano(this.getPoderBase());
+        alvo.receberDano(dano);
         if (alvo.getContadorAbate() == 1) {
             setAbates(getAbates() + 1);
             alvo.contadorAbate = 0;
@@ -208,5 +229,4 @@ public class Ranqueados extends Personagem {
         System.out.println("Capturas de objetivo: " + capturas);
         System.out.println("Rupturas de canalização: " + rupturas);
     }
-
 }
