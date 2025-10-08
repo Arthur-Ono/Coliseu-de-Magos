@@ -100,6 +100,7 @@ public class OrganizadorDeDuelos extends Servicos {
         System.out.println("\n💥 O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! 💥");
 
         Map<Ranqueados, Integer> defesa = new HashMap<>();
+        Map<Ranqueados, Ranqueados> ultimoAlvoAtacado = new HashMap<>();
 
         int turno = 1;
         while (timeEstaVivo(time1) && timeEstaVivo(time2)) {
@@ -163,7 +164,8 @@ public class OrganizadorDeDuelos extends Servicos {
                         System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
                         for (int i = 0; i < grimorio.size(); i++) {
                             Magia m = grimorio.get(i);
-                            System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: " + m.calcularDano(atacante.getEscola(),atacante.getPoderBase()));
+                            System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
+                                    + m.calcularDano(atacante.getEscola(), atacante.getPoderBase()));
                         }
 
                         // escolhe a magia ou ataque básico
@@ -191,8 +193,10 @@ public class OrganizadorDeDuelos extends Servicos {
                                     System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
                                     for (int i = 0; i < grimorio.size(); i++) {
                                         Magia m = grimorio.get(i);
-                                        System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: " + m.calcularDano(atacante.getEscola(),atacante.getPoderBase()) + " | Mana: "+ m.getCustoMana())
-                                        ;}
+                                        System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
+                                                + m.calcularDano(atacante.getEscola(), atacante.getPoderBase())
+                                                + " | Mana: " + m.getCustoMana());
+                                    }
                                     escolhaAtaque = scanner.nextInt();
                                     scanner.nextLine();
                                     continue;
@@ -207,10 +211,12 @@ public class OrganizadorDeDuelos extends Servicos {
                             }
                         }
 
+                        // realiza o ataque
                         atacante.causarDano(alvo, magiaSelecionada);
+                        ultimoAlvoAtacado.put(atacante, alvo);
 
-                    } 
-                    
+                    }
+
                     else if (acao == 2) {
                         if (!defesa.containsKey(atacante)) {
                             defesa.put(atacante, atacante.getResistencia());
@@ -242,6 +248,29 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.println("🏆 O VENCEDOR É: TIME 2!");
         } else {
             System.out.println("O duelo terminou em empate!");
+        }
+
+        if (timeEstaVivo(time1)) {
+            for (Ranqueados mago : time1) {
+                mago.setCapturas(mago.getCapturas() + 1);
+            }
+        } else if (timeEstaVivo(time2)) {
+            for (Ranqueados mago : time2) {
+                mago.setCapturas(mago.getCapturas() + 1);
+            }
+        }
+
+        // contabilizar os rankings aqui
+        ArrayList<Ranqueados> todosMAgos = new ArrayList<>();
+        todosMAgos.addAll(time1);
+        todosMAgos.addAll(time2);
+        for (Ranqueados mago : todosMAgos) {
+            Ranqueados alvo = ultimoAlvoAtacado.get(mago);
+            if (alvo != null) {
+                mago.incrementarRanking(alvo, todosMAgos);
+            } else {
+                mago.incrementarRanking(mago, todosMAgos);
+            }
         }
 
         System.out.println("\nPressione Enter para voltar ao menu...");
