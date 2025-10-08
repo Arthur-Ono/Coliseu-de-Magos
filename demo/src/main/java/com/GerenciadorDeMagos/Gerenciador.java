@@ -3,7 +3,7 @@ package com.GerenciadorDeMagos;
 import java.util.List;
 import java.util.ArrayList;
 import com.personagem.Personagem;
-import com.Menu.Menu;
+
 public class Gerenciador{
     List<Personagem> listaDeMagos;
 

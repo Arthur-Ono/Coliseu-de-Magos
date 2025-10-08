@@ -1,6 +1,5 @@
 package com.personagem;
 
-import java.util.ArrayList;
 
 public class Personagem {
 
@@ -15,9 +14,10 @@ public class Personagem {
     private int controlador;
     private int horaEntrada;
     private int vidaAtual = vidaMax;
+    private int velocidade;
 
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-            int resistencia, int controlador, int horaEntrada) {
+            int resistencia, int controlador, int horaEntrada, int velocidade) {
         this.id = id;
         this.codinome = codinome;
         this.escola = escola;
@@ -29,9 +29,17 @@ public class Personagem {
         this.controlador = controlador;
         this.horaEntrada = horaEntrada;
         this.vidaAtual = vidaMax;
+        this.velocidade=velocidade;
     }
 
     public Personagem(){}
+
+    public int getVelocidade(){
+        return velocidade;
+    }
+    public void setVelocidade(int velocidade){
+        this.velocidade=velocidade;
+    }
 
     public int getVidaAtual() {
         return vidaAtual;

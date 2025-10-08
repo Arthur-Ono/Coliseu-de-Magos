@@ -124,9 +124,9 @@ public class Ranqueados extends Personagem {
     }
 
     public Ranqueados(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-            int resistencia, int controlador, int horaEntrada, int abates, int assistencias, int danoCausado,
+            int resistencia, int controlador, int horaEntrada, int velocidade ,int abates, int assistencias, int danoCausado,
             int danoMitigado, int rupturas, int capturas) {
-        super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada);
+        super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade);
         this.abates = abates;
         this.assistencias = assistencias;
         this.danoCausado = danoCausado;
