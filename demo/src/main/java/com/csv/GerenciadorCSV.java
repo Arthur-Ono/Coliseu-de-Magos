@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.personagem.MagoElemental;
 import com.personagem.Personagem;
+import com.personagem.Ranqueados; // Importa a nova classe Ranqueados
 
 public class GerenciadorCSV {
 
     public void salvar(List<Personagem> magos, String nomeArquivo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             //Intancia um objeto writer da classe BufferedWriter e cria um novo arquivo para poder escrever nele
-            writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,tipo,alto");
+            writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,tipo,abates,assistencias,danoCausado,danoMitigado,rupturas,capturas");
             writer.newLine();
             //Cria um cabeçalho e pula uma linha
             for (Personagem mago : magos) {
@@ -40,12 +41,19 @@ public class GerenciadorCSV {
                 //Pega o nome da classe do mago (MagoElemental, MagoArcano, etc) e escreve no CSV
                 //Porque o getSimple? Pra pegar apenas o nome da classe, em string, e não o objetivo inteiro.
                 //Porque isso? pra não dar aquela desgraça de "class com.personagem.MagoElemental"
-                if (mago instanceof MagoElemental) {
-                    //verifica se o mago é uma instância de MagoElemental antes de tentar acessar o método getAlto()
-                    linha.append(",").append(((MagoElemental) mago).getAlto());
-                    //Após escrever uma vírgula, é feito um Type Cast (transformação de tipo) do mago, que é do tipo personagem, para MagoElemental
+                
+                if (mago instanceof Ranqueados) {
+                    //verifica se o mago é uma instância de Ranqueados antes de tentar acessar os métodos de ranking
+                    Ranqueados ranqueado = (Ranqueados) mago;
+                    linha.append(",").append(ranqueado.getAbates());
+                    linha.append(",").append(ranqueado.getAssistencias());
+                    linha.append(",").append(ranqueado.getDanoCausado());
+                    linha.append(",").append(ranqueado.getDanoMitigado());
+                    linha.append(",").append(ranqueado.getRupturas());
+                    linha.append(",").append(ranqueado.getCapturas());
                 } else {
-                    linha.append(",0");
+                    // Se não for ranqueado, preenche com zeros para manter a estrutura do CSV
+                    linha.append(",0,0,0,0,0,0");
                 }
                 
                 writer.write(linha.toString());
@@ -74,27 +82,37 @@ public class GerenciadorCSV {
 
                 int id = Integer.parseInt(dados[0]);
                 String codinome = dados[1];
+                String escola = dados[2];
                 int vidaMax = Integer.parseInt(dados[3]);
                 int manaMax = Integer.parseInt(dados[4]);
                 String foco = dados[5];
                 int poderBase = Integer.parseInt(dados[6]);
                 int resistencia = Integer.parseInt(dados[7]);
                 int controlador = Integer.parseInt(dados[8]);
+                int horaEntrada = Integer.parseInt(dados[9]);
                 String tipo = dados[10];
-                int alto = Integer.parseInt(dados[11]);
+
+                // Carrega os dados de ranking
+                int abates = Integer.parseInt(dados[11]);
+                int assistencias = Integer.parseInt(dados[12]);
+                int danoCausado = Integer.parseInt(dados[13]);
+                int danoMitigado = Integer.parseInt(dados[14]);
+                int rupturas = Integer.parseInt(dados[15]);
+                int capturas = Integer.parseInt(dados[16]);
                 
                 Personagem mago = null;
                 switch (tipo) {
-                    case "MagoElemental":
-                        mago = new MagoElemental(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador, alto);
+                    case "Ranqueados":
+                        mago = new Ranqueados(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
                         break;
+                    
                 }
                 
                 if (mago != null) {
                     magos.add(mago);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.err.println("Erro ao carregar o arquivo CSV: " + e.getMessage());
         }
 
