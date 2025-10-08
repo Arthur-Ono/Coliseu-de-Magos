@@ -3,8 +3,7 @@ package com.Menu;
 import java.util.List;
 import java.util.Scanner;
 
-import com.personagem.MagoElemental;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.csv.GerenciadorCSV;
 import com.servicos.BuscadorDeMagos;
@@ -52,7 +51,7 @@ public class Menu {
                     break;
 
                 case 6: 
-                    List<Personagem> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
+                    List<Ranqueados> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
                     gerenciador.setListaDeMagos(magosCarregados);
                     System.out.println("Magos carregados com sucesso de " + NOME_ARQUIVO);
                     System.out.println(magosCarregados.size() + " magos foram carregados.");

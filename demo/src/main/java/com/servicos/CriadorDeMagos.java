@@ -3,18 +3,20 @@ package com.servicos;
 import java.util.Scanner;
 
 import com.GerenciadorDeMagos.Gerenciador;
+import com.personagem.MagoArcano;
 import com.personagem.MagoElemental;
-import com.personagem.Personagem;
-import com.servicos.Servicos;
+import com.personagem.MagoSombrio;
+import com.personagem.Ranqueados;
+
 public class CriadorDeMagos extends Servicos {
 
-    
     public CriadorDeMagos(Scanner scanner, Gerenciador gerenciador) {
         super(scanner, gerenciador);
     }
 
     @Override
     public void executar() {
+
         System.out.println("\n--- CRIAÇÃO DE NOVO MAGO ---");
         System.out.println("Escolha o tipo de Mago:");
         System.out.println("1. Mago Elemental");
@@ -36,47 +38,101 @@ public class CriadorDeMagos extends Servicos {
         System.out.print("Digite o Codinome do mago: ");
         String codinome = scanner.nextLine();
 
-        System.out.print("Digite a Vida Máxima: ");
-        int vidaMax = scanner.nextInt();
-
-        System.out.print("Digite a Mana Máxima: ");
-        int manaMax = scanner.nextInt();
-        scanner.nextLine();
-
         System.out.print("Digite o Foco (Cajado, Varinha, etc): ");
         String foco = scanner.nextLine();
 
-        System.out.print("Digite o Poder Base: ");
-        int poderBase = scanner.nextInt();
-
-        System.out.print("Digite a Resistência Mágica: ");
-        int resistencia = scanner.nextInt();
-
         System.out.print("Digite o Controlador (1 para Humano, 2 para IA): ");
         int controlador = scanner.nextInt();
+
+        System.out.println("Agora você tem 10 pontos para distribuir nos seguintes atributos:");
+        System.out.println("Vida, Mana, Poder base, Resistência e Velocidade.");
+
+        int ptsAtributos = 10;
+        int acumulador = 0;
+
+        System.out.println("Pontos restantes: " + ptsAtributos);
+        System.out.print("Vida máxima base é 10, 5 para cada ponto extra, digite a quantidade de pontos: ");
+        acumulador = scanner.nextInt();
+        int vidaMax = 10 + 5 * acumulador;
+        ptsAtributos = ptsAtributos - acumulador;
+        acumulador = 0;
+
+        if (ptsAtributos == 0) {
+            System.out.println("Sem pontos restantes!");
+        }
+        if (ptsAtributos != 0) {
+            System.out.println("Pontos restantes: " + ptsAtributos);
+            System.out.print("Mana máxima base é 10, 5 para cada ponto extra, digite a quantidade de pontos: ");
+            acumulador = scanner.nextInt();
+
+        }
+        if (ptsAtributos == 0) {
+            System.out.println("Sem pontos restantes!");
+        }
+        int manaMax = 10 + 5 * acumulador;
+        ptsAtributos = ptsAtributos - acumulador;
+        acumulador = 0;
+
+        if (ptsAtributos != 0) {
+            System.out.println("Pontos restantes: " + ptsAtributos);
+            System.out.print("Poder base é 10, 5 para cada ponto extra, digite a quantidade de pontos: ");
+            acumulador = scanner.nextInt();
+        }
+        if (ptsAtributos == 0) {
+            System.out.println("Sem pontos restantes!");
+        }
+        int poderBase = 10 + 5 * acumulador;
+        ptsAtributos = ptsAtributos - acumulador;
+        acumulador = 0;
+
+        if (ptsAtributos != 0) {
+            System.out.println("Pontos restantes: " + ptsAtributos);
+            System.out.print("Resistência Mágica base é 10, 5 para cada ponto extra, digite a quantidade de pontos: ");
+            acumulador = scanner.nextInt();
+        }
+        if (ptsAtributos == 0) {
+            System.out.println("Sem pontos restantes!");
+        }
+        int resistencia = 10 + 5 * acumulador;
+        ptsAtributos = ptsAtributos - acumulador;
+        acumulador = 0;
+
+        if (ptsAtributos != 0) {
+            System.out.println("Pontos restantes: " + ptsAtributos);
+            System.out.print("Digite a Velocidade: ");
+            acumulador = scanner.nextInt();
+        }
+        if (ptsAtributos == 0) {
+            System.out.println("Sem pontos restantes!");
+        }
+
+        int velocidade = 10 + 5 * acumulador;
+        ptsAtributos = ptsAtributos - acumulador;
+        acumulador = 0;
+
         scanner.nextLine();
 
-        Personagem novoMago = null;
+        Ranqueados novoMago = null;
 
         switch (tipo) {
             case 1:
-                System.out.print("Digite o valor para 'alto': ");
-                int alto = scanner.nextInt();
-                scanner.nextLine();
-                novoMago = new MagoElemental(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador, alto);
+                novoMago = new MagoElemental(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador,
+                        velocidade);
                 break;
             case 2:
-                System.out.println("Criação de Mago Arcano ainda não implementada.");
+                novoMago = new MagoArcano(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador,
+                        velocidade);
                 break;
             case 3:
-                System.out.println("Criação de Mago Sombrio ainda não implementada.");
+                novoMago = new MagoSombrio(id, codinome, vidaMax, manaMax, foco, poderBase, resistencia, controlador,
+                        velocidade);
                 break;
         }
 
         if (novoMago != null) {
             this.gerenciador.adicionar(novoMago);
             System.out.println(novoMago.getClass().getSimpleName() + " criado com sucesso!");
-            System.out.println(novoMago); 
+            System.out.println(novoMago);
         }
 
         System.out.println("\nPressione Enter para voltar ao menu...");

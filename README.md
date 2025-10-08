@@ -1,2 +1,3 @@
 # Coliseu-de-Magos
-Projeto do semestre par aprendizado em Java
+
+Projeto do semestre para aprendizado em Java

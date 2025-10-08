@@ -1,4 +1,4 @@
-package com.feitiço;
+package com.feitico;
 
 public class Canalizado extends Magia {
 
@@ -14,10 +14,10 @@ public class Canalizado extends Magia {
     public int calcularDano(String classeMago) {
         int dano = getDanoBase()+(40*getDanoBase())/100;
         if ("Elemental".equalsIgnoreCase(classeMago)) {
-            if (((dano/4)-5)<=0) {
+            if (((dano/3)-5)<=0) {
                 dano=1;
             }
-            else dano=(dano/4)-5;
+            else dano=(dano/3)-5;
         }
         return dano;
     }

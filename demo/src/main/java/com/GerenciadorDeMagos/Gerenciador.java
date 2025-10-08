@@ -2,31 +2,31 @@ package com.GerenciadorDeMagos;
 
 import java.util.List;
 import java.util.ArrayList;
-import com.personagem.Personagem;
-import com.Menu.Menu;
+import com.personagem.Ranqueados;
+
 public class Gerenciador{
-    List<Personagem> listaDeMagos;
+    List<Ranqueados> listaDeMagos;
 
     public Gerenciador() {
         this.listaDeMagos = new ArrayList<>();
     }
 
-    public Personagem buscarPorId(int id) {
-        for (Personagem mago : this.listaDeMagos) {
+    public Ranqueados buscarPorId(int id) {
+        for (Ranqueados mago : this.listaDeMagos) {
             if (mago.getId() == id) {
                 return mago;
             }
         }
         return null;
     }
-    public void adicionar(Personagem mago){
+    public void adicionar(Ranqueados mago){
         this.listaDeMagos.add(mago);
     }
 
-    public List<Personagem> listarTodos() {
+    public List<Ranqueados> listarTodos() {
         return this.listaDeMagos;
     }
-    public void setListaDeMagos(List<Personagem> novaLista) {
+    public void setListaDeMagos(List<Ranqueados> novaLista) {
         this.listaDeMagos = novaLista;
     }
 }

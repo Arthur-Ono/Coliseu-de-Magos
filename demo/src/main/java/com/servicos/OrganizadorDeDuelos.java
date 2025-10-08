@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
+
 
 public class OrganizadorDeDuelos extends Servicos {
 
@@ -24,8 +25,8 @@ public class OrganizadorDeDuelos extends Servicos {
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
-        List<Personagem> time1 = null;
-        List<Personagem> time2 = null;
+        List<Ranqueados> time1 = null;
+        List<Ranqueados> time2 = null;
 
         switch (opcao) {
             case 1:
@@ -54,8 +55,8 @@ public class OrganizadorDeDuelos extends Servicos {
         }
     }
 
-    private List<Personagem> montarTime(int numeroDoTime, int tamanhoDoTime) {
-        List<Personagem> time = new ArrayList<>();
+    private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
+        List<Ranqueados> time = new ArrayList<>();
         System.out.println("\n--- Montando Time " + numeroDoTime + " ---");
 
         for (int i = 1; i <= tamanhoDoTime; i++) {
@@ -63,7 +64,7 @@ public class OrganizadorDeDuelos extends Servicos {
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
 
-            Personagem magoSelecionado = this.gerenciador.buscarPorId(idMago);
+            Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
 
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado. Montagem de time cancelada.");
@@ -80,35 +81,70 @@ public class OrganizadorDeDuelos extends Servicos {
         return time;
     }
 
-    private void iniciarDuelo(List<Personagem> time1, List<Personagem> time2) {
+    private void iniciarDuelo(List<Ranqueados> time1, List<Ranqueados> time2) {
         // Validação básica para garantir que os times não são os mesmos
         if (time1.stream().anyMatch(time2::contains)) {
             System.out.println("Um mago não pode estar em ambos os times. Duelo Cancelado.");
             return;
         }
         
-        System.out.println("\n💥 O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! 💥");
+        // Lista para saber quem ataca primeiro, baseado na velocidade.
+        List<Ranqueados> ordemTurno = new ArrayList<>();
+        ordemTurno.addAll(time1);
+        ordemTurno.addAll(time2);
+        ordemTurno.sort((a,b)-> Integer.compare(b.getVelocidade(),a.getVelocidade()));
         
+        
+        System.out.println("\n💥 O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! 💥");
+
         int turno = 1;
         while (timeEstaVivo(time1) && timeEstaVivo(time2)) {
             System.out.println("\n--- Turno " + turno + " ---");
 
-            System.out.println("Turno do Time 1:");
-            for (Personagem atacante : time1) {
-                if (atacante.getVidaAtual() > 0 && timeEstaVivo(time2)) {
-                    // Bota aqui a lógica de dano, Mathematics.
-                    // Exemplo: atacante.causarDano(time2.get(0)); // Ataca o primeiro vivo do time 2
-                    System.out.println(atacante.getCodinome() + " ataca...");
-                }
-            }
-            
-            System.out.println("\nTurno do Time 2:");
-            for (Personagem atacante : time2) {
-                 if (atacante.getVidaAtual() > 0 && timeEstaVivo(time1)) {
-                    
-                    // Bota aqui a lógica de dano, Mathematics.
-                    // Exemplo: atacante.causarDano(time1.get(0)); // Ataca o primeiro vivo do time 1
-                    System.out.println(atacante.getCodinome() + " ataca...");
+            for(Ranqueados atacante: ordemTurno){
+                if (atacante.getVidaAtual()>0) {
+                    System.out.println("Atacante "+ atacante.getCodinome());
+                    System.out.println("Escolha sua ação:\n (1) Atacar\n (2) Defender");
+                    int acao = scanner.nextInt();
+                    if (acao ==1){
+                        // verifica se o atacante é do time 1, se sim, os inimigos são o time 2, caso contrário, são do time 1
+                        List<Ranqueados> adversarios = time1.contains(atacante) ? time2 : time1;
+
+                        // aqui eu fiz pra listar os magos vivos do time adversário, iamgina escolher atacar um corpo morto........
+                        List<Ranqueados> alvosVivos= new ArrayList<>();
+                        System.out.println("Magos vivos do time adversário:");
+                        for (int i =0; i<adversarios.size();i++){
+                            Ranqueados p = adversarios.get(i);
+                            if (p.getVidaAtual()>0) {
+                                alvosVivos.add(p);
+                                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: " + p.getVidaAtual() + ")");
+                                
+                            }
+                        }
+
+                        if (alvosVivos.isEmpty()) {
+                            System.out.println("Não há alvos vivos para atacar! A batalha acabou!");
+                            continue;
+                        }
+
+                        System.out.println("Escolha quem você deseja atacar!");
+                        int escolha = scanner.nextInt();
+                        while (escolha < 1 || escolha > alvosVivos.size()) {
+                           
+                            System.out.println("Escolha inválida!\n Escolha outra vez!");
+                            System.out.println("Escolha quem você deseja atacar!");
+                            escolha = scanner.nextInt();
+                            scanner.nextLine();
+                            
+                        }
+                            
+                        Ranqueados alvo = alvosVivos.get(escolha-1);
+                        atacante.causarDano(alvo);
+
+                    }
+                    else if (acao ==2) {
+                        atacante.setResistencia(atacante.getResistencia()+atacante.getResistencia()/2);
+                    }
                 }
             }
 
@@ -138,8 +174,8 @@ public class OrganizadorDeDuelos extends Servicos {
         this.scanner.nextLine();
     }
 
-    private boolean timeEstaVivo(List<Personagem> time) {
-        for (Personagem p : time) {
+    private boolean timeEstaVivo(List<Ranqueados> time) {
+        for (Ranqueados p : time) {
             if (p.getVidaAtual() > 0) {
                 return true;
             }
