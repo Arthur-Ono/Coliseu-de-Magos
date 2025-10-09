@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.*;
+import com.feitico.Magia;
 import com.personagem.Ranqueados;
 
 public class OrganizadorDeDuelos extends Servicos {
@@ -93,9 +94,15 @@ public class OrganizadorDeDuelos extends Servicos {
 
                 if (atacante.getVidaAtual() > 0) {
                     System.out.println("Atacante " + atacante.getCodinome());
-                    System.out.println("Vida: " + atacante.getVidaAtual() + "Mana: ");
+                    System.out.println("Vida: " + atacante.getVidaAtual() + " Mana: " + atacante.getManaAtual());
                     System.out.println("Escolha sua ação:\n (1) Atacar\n (2) Defender");
                     int acao = scanner.nextInt();
+                    while (acao < 1 || acao > 2) {
+                        System.out.println("Escolha inválida!\n Escolha outra vez!");
+                        System.out.println("Escolha uma ação válida!");
+                        acao = scanner.nextInt();
+                        scanner.nextLine();
+                    }
                     if (acao == 1) {
 
                         // verifica se o atacante é do time 1, se sim, os inimigos são o time 2, caso
@@ -133,7 +140,63 @@ public class OrganizadorDeDuelos extends Servicos {
                         }
 
                         Ranqueados alvo = alvosVivos.get(escolha - 1);
-                        atacante.causarDano(alvo);
+
+                        // abre o grimório e mostra as magias.... se tiver...
+                        List<Magia> grimorio = atacante.getGrimorio();
+                        System.out.println("Escolha o tipo de ataque: ");
+                        System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
+                        for (int i = 0; i < grimorio.size(); i++) {
+                            Magia m = grimorio.get(i);
+                            System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
+                                    + m.calcularDano(atacante.getEscola(), atacante.getPoderBase()));
+                        }
+
+                        // escolhe a magia ou ataque básico
+                        System.out.println("Digite o que você fará: ");
+                        int escolhaAtaque = scanner.nextInt();
+                        scanner.nextLine();
+                        while (escolhaAtaque < 0 || escolhaAtaque > grimorio.size()) {
+                            System.out.println("Faça uma escolha válida!\n");
+                            escolhaAtaque = scanner.nextInt();
+                        }
+                        // se escolheu magia, armazena a informação aqui!!!!
+                        Magia magiaSelecionada = null;
+                        if (escolhaAtaque > 0 && escolhaAtaque <= grimorio.size()) {
+                            magiaSelecionada = grimorio.get(escolhaAtaque - 1);
+                        }
+
+                        boolean ataqueValido = false;
+                        while (!ataqueValido) {
+                            magiaSelecionada = null;
+                            if (escolhaAtaque > 0 && escolhaAtaque <= grimorio.size()) {
+                                magiaSelecionada = grimorio.get(escolhaAtaque - 1);
+                                if (atacante.getManaAtual() < magiaSelecionada.getCustoMana()) {
+                                    System.out.println("Mana insuficiente para " + magiaSelecionada.getNome() + "!");
+                                    System.out.println("Escolha outro ataque:");
+                                    System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
+                                    for (int i = 0; i < grimorio.size(); i++) {
+                                        Magia m = grimorio.get(i);
+                                        System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
+                                                + m.calcularDano(atacante.getEscola(), atacante.getPoderBase())
+                                                + " | Mana: " + m.getCustoMana());
+                                    }
+                                    escolhaAtaque = scanner.nextInt();
+                                    scanner.nextLine();
+                                    continue;
+                                } else {
+                                    // desconta a mana
+                                    atacante.setManaAtual(atacante.getManaAtual() - magiaSelecionada.getCustoMana());
+                                    ataqueValido = true;
+                                }
+                            } else {
+                                // ataque básico
+                                ataqueValido = true;
+                            }
+                        }
+
+                        // realiza o ataque
+                        atacante.causarDano(alvo, magiaSelecionada);
+                        ultimoAlvoAtacado.put(atacante, alvo);
 
                     } else if (acao == 2) {
                         atacante.setResistencia(atacante.getResistencia() + atacante.getResistencia() / 2);

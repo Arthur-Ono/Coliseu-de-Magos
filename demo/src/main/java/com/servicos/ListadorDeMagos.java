@@ -3,7 +3,6 @@ package com.servicos;
 import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
- // Mudei o import de Ranqueados para Personagem
 import com.personagem.Ranqueados;
 
 public class ListadorDeMagos extends Servicos {
