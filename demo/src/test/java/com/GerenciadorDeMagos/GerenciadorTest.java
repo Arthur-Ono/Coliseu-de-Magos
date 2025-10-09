@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.personagem.MagoElemental;
-import com.personagem.Personagem;
+import com.personagem.Ranqueados;
 import com.servicos.BuscadorDeMagos;
 import com.servicos.CriadorDeMagos;
 
@@ -28,7 +28,7 @@ public class GerenciadorTest {
     @Test
     void testeAdicionarMagoEVerificarTamanhoDaLista() {
         // CORREÇÃO: Usa o novo construtor completo, com valores padrão (0) para os novos atributos
-        Personagem magoDeTeste = new MagoElemental(1, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0);
+        Ranqueados magoDeTeste = new MagoElemental(1, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0);
         
         gerenciador.adicionar(magoDeTeste);
 
@@ -38,11 +38,11 @@ public class GerenciadorTest {
     @Test
     void testeBuscarMagoPorIdExistente() {
         // CORREÇÃO: Usa o novo construtor completo
-        Personagem mago1 = new MagoElemental(10, "Merlin", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 60, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago1 = new MagoElemental(10, "Merlin", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 60, 0, 0, 0, 0, 0, 0);
         gerenciador.adicionar(mago1);
 
         // CORREÇÃO: O método buscarPorId retorna um Personagem. Usar o tipo mais geral é mais seguro.
-        Personagem magoEncontrado = gerenciador.buscarPorId(10);
+        Ranqueados magoEncontrado = gerenciador.buscarPorId(10);
 
         assertNotNull(magoEncontrado);
         assertEquals("Merlin", magoEncontrado.getCodinome());
@@ -51,7 +51,7 @@ public class GerenciadorTest {
     @Test
     void testeBuscarMagoPorIdInexistente() {
         // CORREÇÃO: Usar o tipo Personagem
-        Personagem magoEncontrado = gerenciador.buscarPorId(999);
+        Ranqueados magoEncontrado = gerenciador.buscarPorId(999);
 
         assertNull(magoEncontrado);
     }
@@ -80,7 +80,7 @@ public class GerenciadorTest {
 
         assertEquals(1, gerenciador.listarTodos().size(), "A lista de magos deveria ter 1 mago após a criação.");
         
-        Personagem magoCriado = gerenciador.buscarPorId(101);
+        Ranqueados magoCriado = gerenciador.buscarPorId(101);
         assertNotNull(magoCriado, "O mago com ID 101 deveria ter sido encontrado.");
         assertEquals("Mago-Teste", magoCriado.getCodinome(), "O codinome do mago criado está incorreto.");
     }
@@ -88,7 +88,7 @@ public class GerenciadorTest {
     @Test
     void testeBuscadorDeMagosEncontraCorretamente() {
         // CORREÇÃO: Usa o novo construtor completo
-        Personagem magoExistente = new MagoElemental(77, "AlvoDoTeste", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 45, 0, 0, 0, 0, 0, 0);
+        Ranqueados magoExistente = new MagoElemental(77, "AlvoDoTeste", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 45, 0, 0, 0, 0, 0, 0);
         gerenciador.adicionar(magoExistente);
 
         String inputDoUsuario = "77\n";

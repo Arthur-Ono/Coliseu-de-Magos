@@ -12,18 +12,18 @@ import java.util.List;
 import com.personagem.MagoArcano;
 import com.personagem.MagoElemental;
 import com.personagem.MagoSombrio;
-import com.personagem.Personagem;
 import com.personagem.Ranqueados;
+
 
 public class GerenciadorCSV {
 
-    public void salvar(List<Personagem> magos, String nomeArquivo) {
+    public void salvar(List<Ranqueados> magos, String nomeArquivo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             //Intancia um objeto writer da classe BufferedWriter e cria um novo arquivo para poder escrever nele
             writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,velocidade,tipo,abates,assistencias,danoCausado,danoMitigado,rupturas,capturas");
             writer.newLine();
             //Cria um cabeçalho e pula uma linha
-            for (Personagem mago : magos) {
+            for (Ranqueados mago : magos) {
                 //Foreach, normal
                 StringBuilder linha = new StringBuilder();
                 //Crie tipo uma caixa de texto editável e flexível, permitindo assim "concatenar" appends
@@ -44,7 +44,7 @@ public class GerenciadorCSV {
                 linha.append(mago.getClass().getSimpleName());
                 //Pega o nome da classe do mago (MagoElemental, MagoArcano, etc) e escreve no CSV
                 //Porque o getSimple? Pra pegar apenas o nome da classe, em string, e não o objetivo inteiro.
-                //Porque isso? pra não dar aquela desgraça de "class com.personagem.MagoElemental"
+                //Porque isso? pra não dar aquela desgraça de "class com.Ranqueados.MagoElemental"
                 
                 Ranqueados ranqueado = (Ranqueados) mago;
                 linha.append(",").append(ranqueado.getAbates());
@@ -63,11 +63,11 @@ public class GerenciadorCSV {
         }
     }
 
-    // CORREÇÃO: O método carregar deve retornar o tipo mais genérico, List<Personagem>,
+    // CORREÇÃO: O método carregar deve retornar o tipo mais genérico, List<Ranqueados>,
     // para ser compatível com 'gerenciador.setListaDeMagos()'.
-    public List<Personagem> carregar(String nomeArquivo) {
-        // CORREÇÃO: A lista interna também deve ser de Personagem.
-        List<Personagem> magos = new ArrayList<>();
+    public List<Ranqueados> carregar(String nomeArquivo) {
+        // CORREÇÃO: A lista interna também deve ser de Ranqueados.
+        List<Ranqueados> magos = new ArrayList<>();
         File arquivo = new File(nomeArquivo);
 
         if (!arquivo.exists()) {
@@ -100,8 +100,8 @@ public class GerenciadorCSV {
                 int rupturas = Integer.parseInt(dados[16]);
                 int capturas = Integer.parseInt(dados[17]);
                 
-                // A variável 'mago' é do tipo Personagem.
-                Personagem mago = null;
+                // A variável 'mago' é do tipo Ranqueados.
+                Ranqueados mago = null;
                 switch (tipo) {
                     case "MagoElemental":
                         mago = new MagoElemental(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
@@ -115,8 +115,8 @@ public class GerenciadorCSV {
                 } 
                 
                 if (mago != null) {
-                    // Agora isso funciona: estamos adicionando um Personagem (MagoElemental)
-                    // a uma lista de Personagem (magos).
+                    // Agora isso funciona: estamos adicionando um Ranqueados (MagoElemental)
+                    // a uma lista de Ranqueados (magos).
                     magos.add(mago);
                 }
             }

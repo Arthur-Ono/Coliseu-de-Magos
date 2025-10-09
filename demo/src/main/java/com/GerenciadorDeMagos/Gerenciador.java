@@ -2,26 +2,26 @@ package com.GerenciadorDeMagos;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.personagem.Personagem; // A lista principal trabalha com Personagem
+import com.personagem.Ranqueados; // A lista principal trabalha com Ranqueados
 
 public class Gerenciador {
 
-    // A lista principal guarda 'Personagem', o tipo mais genérico.
-    private List<Personagem> listaDeMagos = new ArrayList<>();
+    // A lista principal guarda 'Ranqueados', o tipo mais genérico.
+    private List<Ranqueados> listaDeMagos = new ArrayList<>();
 
-    // O método 'adicionar' aceita qualquer coisa que seja um 'Personagem'.
-    public void adicionar(Personagem mago) {
+    // O método 'adicionar' aceita qualquer coisa que seja um 'Ranqueados'.
+    public void adicionar(Ranqueados mago) {
         listaDeMagos.add(mago);
     }
 
-    // O método 'listarTodos' retorna a lista de 'Personagem'.
-    public List<Personagem> listarTodos() {
+    // O método 'listarTodos' retorna a lista de 'Ranqueados'.
+    public List<Ranqueados> listarTodos() {
         return listaDeMagos;
     }
 
-    // O método 'buscarPorId' retorna um 'Personagem'.
-    public Personagem buscarPorId(int id) {
-        for (Personagem mago : listaDeMagos) {
+    // O método 'buscarPorId' retorna um 'Ranqueados'.
+    public Ranqueados buscarPorId(int id) {
+        for (Ranqueados mago : listaDeMagos) {
             if (mago.getId() == id) {
                 return mago;
             }
@@ -29,8 +29,8 @@ public class Gerenciador {
         return null;
     }
     
-    // O método 'setListaDeMagos' aceita uma lista de 'Personagem'.
-    public void setListaDeMagos(List<Personagem> magos) {
+    // O método 'setListaDeMagos' aceita uma lista de 'Ranqueados'.
+    public void setListaDeMagos(List<Ranqueados> magos) {
         this.listaDeMagos = magos;
     }
 }

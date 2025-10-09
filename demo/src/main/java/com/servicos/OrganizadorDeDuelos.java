@@ -1,14 +1,13 @@
 package com.servicos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.*;
-import com.Mapas.GerenciadorDeArenas;
-import com.personagem.Personagem;
 import com.personagem.Ranqueados;
-import com.feitico.Magia; // Import necessário para a nova lógica de dano
 
 public class OrganizadorDeDuelos extends Servicos {
 
@@ -19,7 +18,7 @@ public class OrganizadorDeDuelos extends Servicos {
     @Override
     public void executar() {
         System.out.println("\n----- DUELO IMEDIATO -----");
-        
+
         // 1. Lógica para escolher a arena
         GerenciadorDeArenas gerenciadorArenas = new GerenciadorDeArenas();
         List<Arena> arenasDisponiveis = gerenciadorArenas.getArenas();
@@ -30,7 +29,7 @@ public class OrganizadorDeDuelos extends Servicos {
         System.out.print("Escolha uma opção de Arena: ");
         int escolhaArena = scanner.nextInt() - 1;
         scanner.nextLine();
-        
+
         if (escolhaArena < 0 || escolhaArena >= arenasDisponiveis.size()) {
             System.out.println("Arena inválida. Duelo cancelado.");
             return;
@@ -65,47 +64,97 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.println("Um mago não pode estar em ambos os times. Duelo Cancelado.");
             return;
         }
-        
+
         List<Ranqueados> ordemTurno = new ArrayList<>();
         ordemTurno.addAll(time1);
         ordemTurno.addAll(time2);
         ordemTurno.sort((a, b) -> Integer.compare(b.getVelocidade(), a.getVelocidade()));
-        
-        System.out.println("\n💥 O DUELO EM " + arenaEscolhida.getNome().toUpperCase() + " COMEÇOU! 💥");
-        
+
+        System.out.println("\n💥 O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! 💥");
+
+        Map<Ranqueados, Integer> defesa = new HashMap<>();
+        Map<Ranqueados, Ranqueados> ultimoAlvoAtacado = new HashMap<>();
+
         CondicaoDeCampo condicaoAtiva = arenaEscolhida.sortearCondicao();
         System.out.println("Condição Inicial: " + condicaoAtiva.getNome());
 
         int turno = 1;
         while (timeEstaVivo(time1) && timeEstaVivo(time2)) {
             System.out.println("\n--- Turno " + turno + " ---");
-            System.out.println("Condição Ativa: " + condicaoAtiva.getNome());
 
             for (Ranqueados atacante : ordemTurno) {
-                if (atacante.getVidaAtual() > 0) {
-                    System.out.println("\nTurno de: " + atacante.getCodinome() + " (Vida: " + atacante.getVidaAtual() + ")");
-                    System.out.println("Escolha sua ação:\n (1) Ataque Básico\n (2) Usar Magia\n (3) Defender");
-                    int acao = scanner.nextInt();
-                    scanner.nextLine();
 
-                    if (acao == 1) { // Ataque Básico
+                // atacante que estava defendendo agora não defende mais!
+                if (defesa.containsKey(atacante)) {
+                    atacante.setResistencia(defesa.get(atacante));
+                    defesa.remove(atacante);
+                    System.out.println(atacante.getCodinome() + "Parou de defender");
+                }
+
+                if (atacante.getVidaAtual() > 0) {
+                    System.out.println("Atacante " + atacante.getCodinome());
+                    System.out.println("Vida: " + atacante.getVidaAtual() + "Mana: ");
+                    System.out.println("Escolha sua ação:\n (1) Atacar\n (2) Defender");
+                    int acao = scanner.nextInt();
+                    if (acao == 1) {
+
+                        // verifica se o atacante é do time 1, se sim, os inimigos são o time 2, caso
+                        // contrário, são do time 1
                         List<Ranqueados> adversarios = time1.contains(atacante) ? time2 : time1;
-                        Ranqueados alvo = escolherAlvo(adversarios);
-                        if (alvo != null) {
-                            atacante.causarDano(alvo, null); // Passa null para a magia
+
+                        // aqui eu fiz pra listar os magos vivos do time adversário, iamgina escolher
+                        // atacar um corpo morto........
+                        List<Ranqueados> alvosVivos = new ArrayList<>();
+                        System.out.println("Magos vivos do time adversário:");
+                        for (int i = 0; i < adversarios.size(); i++) {
+                            Ranqueados p = adversarios.get(i);
+                            if (p.getVidaAtual() > 0) {
+                                alvosVivos.add(p);
+                                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: "
+                                        + p.getVidaAtual() + ")");
+
+                            }
                         }
-                    } else if (acao == 2) { // Usar Magia
-                        // Lógica para escolher magia e alvo
-                    } else if (acao == 3) { // Defender
-                        // Lógica de defesa
+
+                        if (alvosVivos.isEmpty()) {
+                            System.out.println("Não há alvos vivos para atacar! A batalha acabou!");
+                            continue;
+                        }
+
+                        System.out.println("Escolha quem você deseja atacar!");
+                        int escolha = scanner.nextInt();
+                        while (escolha < 1 || escolha > alvosVivos.size()) {
+
+                            System.out.println("Escolha inválida!\n Escolha outra vez!");
+                            System.out.println("Escolha quem você deseja atacar!");
+                            escolha = scanner.nextInt();
+                            scanner.nextLine();
+
+                        }
+
+                        Ranqueados alvo = alvosVivos.get(escolha - 1);
+                        atacante.causarDano(alvo);
+
+                    } else if (acao == 2) {
+                        atacante.setResistencia(atacante.getResistencia() + atacante.getResistencia() / 2);
                     }
                 }
             }
-            
+
+            // Impressão da vida de todos
+            System.out.println("\n-- Status dos Times --");
+            System.out.print("Time 1: ");
+            time1.forEach(p -> System.out.print(p.getCodinome() + "(" + p.getVidaAtual() + ") "));
+            System.out.print("\nTime 2: ");
+            time2.forEach(p -> System.out.print(p.getCodinome() + "(" + p.getVidaAtual() + ") "));
+            System.out.println();
+
             // Lógica de final de turno (veneno, etc)
-            
+
             turno++;
-            break; // Break temporário
+            // Quando tu terminares o ngc de dano remove esse break aqui. ele serve só pro
+            // esqueleto não ficar em loop
+
         }
 
         System.out.println("\n--- FIM DO DUELO ---");
@@ -117,35 +166,58 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.println("O duelo terminou em empate!");
         }
 
-        System.out.println("\nPressione Enter para continuar...");
-        this.scanner.nextLine();
-    }
-    
-    // Método privado para escolher um alvo
-    private Ranqueados escolherAlvo(List<Ranqueados> adversarios) {
-        List<Ranqueados> alvosVivos = new ArrayList<>();
-        System.out.println("Escolha um alvo:");
-        for (Ranqueados p : adversarios) {
-            if (p.getVidaAtual() > 0) {
-                alvosVivos.add(p);
-                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: " + p.getVidaAtual() + ")");
+        if (timeEstaVivo(time1)) {
+            for (Ranqueados mago : time1) {
+                mago.setCapturas(mago.getCapturas() + 1);
+            }
+        } else if (timeEstaVivo(time2)) {
+            for (Ranqueados mago : time2) {
+                mago.setCapturas(mago.getCapturas() + 1);
             }
         }
 
-        if (alvosVivos.isEmpty()) {
-            return null; // Não há mais alvos
+        // contabilizar os rankings aqui
+        ArrayList<Ranqueados> todosMAgos = new ArrayList<>();
+        todosMAgos.addAll(time1);
+        todosMAgos.addAll(time2);
+        for (Ranqueados mago : todosMAgos) {
+            Ranqueados alvo = ultimoAlvoAtacado.get(mago);
+            if (alvo != null) {
+                mago.incrementarRanking(alvo, todosMAgos);
+            } else {
+                mago.incrementarRanking(mago, todosMAgos);
+            }
         }
 
-        System.out.print("Opção: ");
-        int escolha = scanner.nextInt();
-        scanner.nextLine();
-
-        if (escolha < 1 || escolha > alvosVivos.size()) {
-            System.out.println("Escolha inválida!");
-            return escolherAlvo(adversarios); // Pede para escolher de novo
-        }
-        return alvosVivos.get(escolha - 1);
+        System.out.println("\nPressione Enter para continuar...");
+        this.scanner.nextLine();
     }
+
+    // Método privado para escolher um alvo
+    /*
+     * private Ranqueados escolherAlvo(List<Ranqueados> adversarios) {
+     * List<Ranqueados> alvosVivos = new ArrayList<>();
+     * System.out.println("Escolha um alvo:");
+     * for (Ranqueados p : adversarios) {
+     * if (p.getVidaAtual() > 0) {
+     * alvosVivos.add(p);
+     * System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: "
+     * + p.getVidaAtual() + ")");
+     * }
+     * }
+     * * if (alvosVivos.isEmpty()) {
+     * return null; // Não há mais alvos
+     * }
+     * * System.out.print("Opção: ");
+     * int escolha = scanner.nextInt();
+     * scanner.nextLine();
+     * * if (escolha < 1 || escolha > alvosVivos.size()) {
+     * System.out.println("Escolha inválida!");
+     * return escolherAlvo(adversarios); // Pede para escolher de novo
+     * }
+     * return alvosVivos.get(escolha - 1);
+     * }
+     */
 
     private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
         List<Ranqueados> time = new ArrayList<>();
@@ -154,14 +226,14 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.print("Digite o ID do " + i + "º mago do Time " + numeroDoTime + ": ");
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
-            
-            Personagem magoSelecionado = this.gerenciador.buscarPorId(idMago);
+
+            Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
 
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado.");
                 return null;
             }
-            
+
             if (!(magoSelecionado instanceof Ranqueados)) {
                 System.out.println("ERRO: O personagem selecionado não é um combatente ranqueado.");
                 return null;
@@ -171,7 +243,7 @@ public class OrganizadorDeDuelos extends Servicos {
         }
         return time;
     }
-    
+
     private boolean timeEstaVivo(List<Ranqueados> time) {
         for (Ranqueados p : time) {
             if (p.getVidaAtual() > 0) {

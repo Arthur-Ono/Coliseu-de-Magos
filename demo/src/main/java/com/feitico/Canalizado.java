@@ -4,21 +4,19 @@ public class Canalizado extends Magia {
 
     
     
-    public Canalizado(String nome, int custoMana, int tempoRecarga, String escola, int danoBase) {
-        super(nome, custoMana, tempoRecarga, escola, danoBase);
+    public Canalizado(String nome, int custoMana, int tempoRecarga, String escola) {
+        super(nome, custoMana, tempoRecarga, escola);
+        this.setCustoMana(3);
     }
 
 
 
     @Override
-    public int calcularDano(String classeMago) {
-        int dano = getDanoBase()+(40*getDanoBase())/100;
-        if ("Elemental".equalsIgnoreCase(classeMago)) {
-            if (((dano/3)-5)<=0) {
-                dano=1;
-            }
-            else dano=(dano/3)-5;
-        }
-        return dano;
+    public int calcularDano(String classeMago, int poderBase) {
+    int dano = poderBase + (40 * poderBase) / 100;
+    if ("Arcano".equalsIgnoreCase(classeMago)) {
+        dano += 10;
     }
+    return dano;
+}
 }

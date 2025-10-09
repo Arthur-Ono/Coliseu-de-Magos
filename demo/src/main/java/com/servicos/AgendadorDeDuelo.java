@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.Arena;
-import com.personagem.Personagem;
+
+import com.personagem.Ranqueados;
 import com.Agenda.Agendamento;
 import com.Agenda.GerenciadorDeAgendamentos;
 import com.Mapas.GerenciadorDeArenas;
@@ -52,8 +53,8 @@ public class AgendadorDeDuelo extends Servicos {
             return;
         }
 
-        List<Personagem> time1 = montarTime(1, tamanho);
-        List<Personagem> time2 = montarTime(2, tamanho);
+        List<Ranqueados> time1 = montarTime(1, tamanho);
+        List<Ranqueados> time2 = montarTime(2, tamanho);
 
         if (time1 == null || time2 == null) {
             System.out.println("Falha na montagem dos times. Agendamento cancelado.");
@@ -75,14 +76,14 @@ public class AgendadorDeDuelo extends Servicos {
         this.gerenciadorAgendamentos.adicionarAgendamento(novoAgendamento);
     }
     
-    private List<Personagem> montarTime(int numeroDoTime, int tamanhoDoTime) {
-        List<Personagem> time = new ArrayList<>();
+    private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
+        List<Ranqueados> time = new ArrayList<>();
         System.out.println("\n--- Montando Time " + numeroDoTime + " ---");
         for (int i = 1; i <= tamanhoDoTime; i++) {
             System.out.print("Digite o ID do " + i + "º mago do Time " + numeroDoTime + ": ");
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
-            Personagem magoSelecionado = this.gerenciador.buscarPorId(idMago);
+            Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado. Montagem de time cancelada.");
                 return null;

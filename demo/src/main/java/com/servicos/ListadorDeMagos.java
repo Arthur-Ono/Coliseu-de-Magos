@@ -3,7 +3,8 @@ package com.servicos;
 import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
-import com.personagem.Personagem; // Mudei o import de Ranqueados para Personagem
+ // Mudei o import de Ranqueados para Personagem
+import com.personagem.Ranqueados;
 
 public class ListadorDeMagos extends Servicos {
 
@@ -19,14 +20,14 @@ public class ListadorDeMagos extends Servicos {
         System.out.println("\n--- LISTA DE MAGOS ---");
         // Os atributos "gerenciador" e "scanner" são herdados da classe Servicos.
         
-        List<Personagem> magos = this.gerenciador.listarTodos();
+        List<Ranqueados> magos = this.gerenciador.listarTodos();
 
         // Verifica se a lista de magos está vazia.
         if (magos.isEmpty()) {
             System.out.println("Nenhum mago cadastrado no momento.");
         } else {
             // Se não estiver vazia, usa um loop 'for-each' para passar por cada mago na lista.
-            for (Personagem mago : magos) {
+            for (Ranqueados mago : magos) {
                 // Para cada mago, imprime suas informações usando o método toString() que você definiu.
                 System.out.println(mago);
             }

@@ -12,9 +12,10 @@ public abstract class Personagem {
     private int resistencia;
     private int controlador;
     private int horaEntrada;
-    private int vidaAtual; 
+    private int vidaAtual = vidaMax;
+    private int manaAtual = manaMax;
     private int velocidade;
-    private int manaAtual; 
+ 
 
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
                       int resistencia, int controlador, int horaEntrada, int velocidade) {
@@ -153,7 +154,18 @@ public abstract class Personagem {
                "Poder Base: " + poderBase + "\n" +
                "Resistência Mágica: " + resistencia + "\n" +
                "Controlador: " + controlador + "\n" +
-               "Hora de Entrada: " + horaEntrada + "\n" +
+               "Velocidade: " + velocidade + "\n" +
                "----------------";
     }
+
+    public int getManaAtual() {
+        return manaAtual;
+    }
+
+    public void setManaAtual(int manaAtual) {
+        this.manaAtual = manaAtual;
+    }
+
 }
+
+   
