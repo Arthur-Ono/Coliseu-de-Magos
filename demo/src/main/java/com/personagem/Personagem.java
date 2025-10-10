@@ -1,6 +1,7 @@
 package com.personagem;
 
-public abstract class Personagem {
+
+public class Personagem {
 
     private int id;
     private String codinome;
@@ -15,10 +16,9 @@ public abstract class Personagem {
     private int vidaAtual = vidaMax;
     private int manaAtual = manaMax;
     private int velocidade;
- 
 
     public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-                      int resistencia, int controlador, int horaEntrada, int velocidade) {
+            int resistencia, int controlador, int horaEntrada, int velocidade) {
         this.id = id;
         this.codinome = codinome;
         this.escola = escola;
@@ -29,18 +29,17 @@ public abstract class Personagem {
         this.resistencia = resistencia;
         this.controlador = controlador;
         this.horaEntrada = horaEntrada;
-        this.velocidade = velocidade;
-        
         this.vidaAtual = vidaMax;
-        this.manaAtual = manaMax;
+        this.velocidade=velocidade;
     }
 
-    public int getVelocidade() {
+    public Personagem(){}
+
+    public int getVelocidade(){
         return velocidade;
     }
-
-    public void setVelocidade(int velocidade) {
-        this.velocidade = velocidade;
+    public void setVelocidade(int velocidade){
+        this.velocidade=velocidade;
     }
 
     public int getVidaAtual() {
@@ -134,28 +133,36 @@ public abstract class Personagem {
     public void receberDano(int poderBase) {
     }
 
+    
     public void causarDano(Personagem alvo) {
+        
     }
     
     public void imprimirVidaAtual() {
         System.out.println("----------------------");
-        System.out.println("Vida atual do " + getCodinome() + ": " + getVidaAtual());
+        System.out.println("Vida atual do " + getCodinome()+": "+getVidaAtual());
     }
+
+    
+
+
+
+
 
     @Override
     public String toString() {
         return "----------------\n" +
-               "ID: " + id + "\n" +
-               "Codinome: " + codinome + "\n" +
-               "Escola: " + escola + "\n" +
-               "Vida Máxima: " + vidaMax + "\n" +
-               "Mana Máxima: " + manaMax + "\n" +
-               "Foco: " + foco + "\n" +
-               "Poder Base: " + poderBase + "\n" +
-               "Resistência Mágica: " + resistencia + "\n" +
-               "Controlador: " + controlador + "\n" +
-               "Velocidade: " + velocidade + "\n" +
-               "----------------";
+                "Controlador: " + controlador + "\n" +
+                "ID: " + id + "\n" +
+                "Codinome: " + codinome + "\n" +
+                "Escola: " + escola + "\n" +
+                "Foco: " + foco + "\n" +
+                "Vida Máxima: " + vidaMax + "\n" +
+                "Mana Máxima: " + manaMax + "\n" +
+                "Poder Base: " + poderBase + "\n" +
+                "Resistência Mágica: " + resistencia + "\n" +
+                "Velocidade: " + velocidade + "\n" +
+                "----------------";
     }
 
     public int getManaAtual() {
@@ -167,5 +174,3 @@ public abstract class Personagem {
     }
 
 }
-
-   
