@@ -18,7 +18,7 @@ public class Canalizado extends Magia {
         dano -= 10;
     }
     if ("Sombrio".equalsIgnoreCase(classeMago)) {
-        dano=+10;
+        dano+=10;
     }
     return dano;
 }

@@ -2,14 +2,14 @@ package com.example;
 
 
 import com.Menu.ColiseuGUI;
-import com.GerenciadorDeMagos.Gerenciador;
-import com.Menu.Menu;
+//import com.GerenciadorDeMagos.Gerenciador;
+//import com.Menu.Menu;
 //import com.personagem.MagoElemental;
 
 public class Main {
     public static void main(String[] args) {
-        Gerenciador gerenciador = new Gerenciador();
-        Menu menu = new Menu();
+       // Gerenciador gerenciador = new Gerenciador();
+       // Menu menu = new Menu();
         // Personagem p1 = new Personagem(12,"1","Elemental",2,2,"Cajado",1,2,2,2);
         // Personagem p2 = new Personagem(13,"1","2",25,2,"2",2,2,2,2);
         
@@ -30,7 +30,7 @@ public class Main {
         // m1.imprimirRanking();
         // m2.imprimirRanking();
         
-        menu.menuPrincipal(gerenciador);
-        //ColiseuGUI.main(args);
+        //menu.menuPrincipal(gerenciador);
+        ColiseuGUI.main(args);
     }
 }

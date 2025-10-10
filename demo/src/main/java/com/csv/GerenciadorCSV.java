@@ -20,7 +20,7 @@ public class GerenciadorCSV {
     public void salvar(List<Ranqueados> magos, String nomeArquivo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             //Intancia um objeto writer da classe BufferedWriter e cria um novo arquivo para poder escrever nele
-            writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,velocidade,tipo,abates,assistencias,danoCausado,danoMitigado,rupturas,capturas");
+            writer.write("id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,velocidade,tipo,abates,assistencias,danoCausado,danoMitigado,rupturas,capturas,acerto,critico,tempoEmCombate");
             writer.newLine();
             //Cria um cabeçalho e pula uma linha
             for (Ranqueados mago : magos) {
@@ -53,6 +53,9 @@ public class GerenciadorCSV {
                 linha.append(",").append(ranqueado.getDanoMitigado());
                 linha.append(",").append(ranqueado.getRupturas());
                 linha.append(",").append(ranqueado.getCapturas());
+                linha.append(",").append(ranqueado.getAcerto());
+                linha.append(",").append(ranqueado.getCritico());
+                linha.append(",").append(ranqueado.getTempoEmCombate());
                 
                 writer.write(linha.toString());
                 //Transforma a "caixa de texto" em uma string e escreve no arquivo
