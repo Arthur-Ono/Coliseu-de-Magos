@@ -182,8 +182,6 @@ public abstract class Personagem {
                "Resistência Mágica: " + resistencia + "\n" +
                "Controlador: " + controlador + "\n" +
                "Velocidade: " + velocidade + "\n" +
-               "Chance de acerto: " + acerto + "\n"+
-               "Chance de crítico: " + critico + "\n"+
                "----------------";
     }
 

@@ -295,17 +295,17 @@ public abstract class Ranqueados extends Personagem {
 
 
         System.out.println("------------");
-        System.out.println("Codinome: " + mago.getCodinome());
-        System.out.println("Abates: " + mago.getAbates());
-        System.out.println("Assistências: " + mago.getAssistencias());
-        System.out.println("Dano causado: " + mago.getDanoCausado());
-        System.out.println("Dano mitigado: " + mago.getDanoMitigado());
-        System.out.println("Capturas de objetivo: " + mago.getCapturas());
-        System.out.println("Rupturas de canalização: " + mago.getRupturas());
-        System.out.println("Tempo em combate: "+mago.getTempoEmCombate());
-        System.out.println("Acertos: "+mago.getAcerto());
-        System.out.println("Criticos: "+mago.getCritico());
-        System.out.println("Eficiência de mana: " + ((mago.getManaGasta() > 0) ? ((double)mago.getDanoCausado() / mago.getManaGasta()) : 0));
+        System.out.println("\nCodinome: " + mago.getCodinome());
+        System.out.println("\nAbates: " + mago.getAbates());
+        System.out.println("\nAssistências: " + mago.getAssistencias());
+        System.out.println("\nDano causado: " + mago.getDanoCausado());
+        System.out.println("\nDano mitigado: " + mago.getDanoMitigado());
+        System.out.println("\nCapturas de objetivo: " + mago.getCapturas());
+        System.out.println("\nRupturas de canalização: " + mago.getRupturas());
+        System.out.println("\nTempo em combate: "+mago.getTempoEmCombate());
+        System.out.println("\nAcertos: "+mago.getAcerto());
+        System.out.println("\nCriticos: "+mago.getCritico());
+        System.out.println("\nEficiência de mana: " + ((mago.getManaGasta() > 0) ? ((double)mago.getDanoCausado() / mago.getManaGasta()) : 0));
         scanner.close();
     }
 }
