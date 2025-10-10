@@ -6,7 +6,7 @@ import java.util.List;
 import com.feitico.Magia;
 
 
-public class Ranqueados extends Personagem {
+public abstract class Ranqueados extends Personagem {
 
 
     // onde guardar as magias :p
@@ -124,8 +124,8 @@ public class Ranqueados extends Personagem {
     }
 
     public Ranqueados(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-            int resistencia, int controlador, int horaEntrada, int velocidade ,int abates, int assistencias, int danoCausado,
-            int danoMitigado, int rupturas, int capturas) {
+                      int resistencia, int controlador, int horaEntrada, int velocidade ,int abates, int assistencias, int danoCausado,
+                      int danoMitigado, int rupturas, int capturas) {
         super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade);
         this.abates = abates;
         this.assistencias = assistencias;
@@ -134,9 +134,6 @@ public class Ranqueados extends Personagem {
         this.rupturas = rupturas;
         this.capturas = capturas;
     }
-
-    public Ranqueados() {
-    };
 
     public void receberDano(int poderBase) {
         int x = 0;
@@ -230,5 +227,4 @@ public class Ranqueados extends Personagem {
         System.out.println("Capturas de objetivo: " + capturas);
         System.out.println("Rupturas de canalização: " + rupturas);
     }
-
 }

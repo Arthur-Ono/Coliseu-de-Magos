@@ -59,7 +59,6 @@ public class AgendadorDeDuelo extends Servicos {
         int tamanho = scanner.nextInt();
         scanner.nextLine();
 
-        // Valida o tamanho do time.
         if (tamanho <= 0 || tamanho > 3) {
             System.out.println("Tamanho de time inválido. Agendamento cancelado.");
             return;
@@ -69,13 +68,11 @@ public class AgendadorDeDuelo extends Servicos {
         List<Ranqueados> time1 = montarTime(1, tamanho);
         List<Ranqueados> time2 = montarTime(2, tamanho);
 
-        // Se a montagem de qualquer um dos times falhou (retornou null), cancela o agendamento.
         if (time1 == null || time2 == null) {
             System.out.println("Falha na montagem dos times. Agendamento cancelado.");
             return;
         }
 
-        // Pergunta para quando o duelo será agendado.
         System.out.print("Agendar duelo para daqui a quantos turnos? ");
         int turnosNoFuturo = scanner.nextInt();
         scanner.nextLine();
@@ -100,14 +97,12 @@ public class AgendadorDeDuelo extends Servicos {
         Agendamento novoAgendamento = new Agendamento(time1, time2, arenaEscolhida, turnoFinal);
         // Envia o "lembrete" para a "secretária" guardar.
         this.gerenciadorAgendamentos.adicionarAgendamento(novoAgendamento);
-        System.out.println("Duelo agendado com sucesso para o turno " + turnoFinal + "!");
     }
     
     // Método ajudante para montar um time. Fica 'private' porque só é usado aqui dentro.
     private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
         List<Ranqueados> time = new ArrayList<>();
         System.out.println("\n--- Montando Time " + numeroDoTime + " ---");
-        // Loop para adicionar a quantidade certa de magos no time.
         for (int i = 1; i <= tamanhoDoTime; i++) {
             System.out.print("Digite o ID do " + i + "º mago do Time " + numeroDoTime + ": ");
             int idMago = this.scanner.nextInt();
@@ -121,16 +116,13 @@ public class AgendadorDeDuelo extends Servicos {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado. Montagem de time cancelada.");
                 return null;
             }
-            // Valida se o mago já não foi adicionado a este time.
             if (time.contains(magoSelecionado)) {
                 System.out.println("ERRO: Mago " + magoSelecionado.getCodinome() + " já está neste time. Montagem de time cancelada.");
                 return null;
             }
-            // Adiciona o mago ao time.
             time.add(magoSelecionado);
             System.out.println(" -> " + magoSelecionado.getCodinome() + " adicionado ao Time " + numeroDoTime);
         }
-        // Retorna a lista com os magos do time.
         return time;
     }
 }

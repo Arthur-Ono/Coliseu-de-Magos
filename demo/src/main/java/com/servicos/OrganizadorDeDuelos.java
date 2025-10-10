@@ -232,11 +232,6 @@ public class OrganizadorDeDuelos extends Servicos {
                         System.out.println("A canalização de " + alvoDaIA.getCodinome() + " foi rompida por um ataque da IA!");
                         atacante.setRupturas(atacante.getRupturas() + 1);
                     }
-                } else if (acao == 2) {
-                    // Guarda o valor original da resistência antes de aumentá-la
-                    magosEmDefesa.put(atacante, atacante.getResistencia());
-                    atacante.setResistencia(atacante.getResistencia() + (atacante.getResistencia() / 2));
-                    System.out.println(atacante.getCodinome() + " está em modo de defesa!");
                 }
             }
             

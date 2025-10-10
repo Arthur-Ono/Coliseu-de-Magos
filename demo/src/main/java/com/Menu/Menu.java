@@ -2,7 +2,8 @@ package com.Menu;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.ArrayList; // Import necessário para a correção do agendamento
+
 import com.personagem.Ranqueados;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.csv.GerenciadorCSV;
@@ -21,8 +22,10 @@ public class Menu {
     // digitação.
     private final String NOME_ARQUIVO = "magos.csv";
 
+    // O método principal que controla o fluxo do jogo.
+    // Ele recebe o 'gerenciador' principal, que guarda a lista de magos.
     public void menuPrincipal(Gerenciador gerenciador) {
-        
+
         // Instancia os gerenciadores do sistema de agendamento e o "relógio" do jogo.
         ControladorDeTurno relogio = new ControladorDeTurno();
         GerenciadorDeAgendamentos gerenciadorAgendamentos = new GerenciadorDeAgendamentos();
@@ -54,10 +57,12 @@ public class Menu {
             System.out.println("9. Imprimir relatório por ID");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
+            // Lê o número que o usuário digitou.
             int opcao = scan.nextInt();
             // Limpa o "Enter" que o usuário digitou, para evitar bugs na próxima leitura.
             scan.nextLine();
 
+            // O 'switch' direciona o programa para a ação que o usuário escolheu.
             switch (opcao) {
                 case 1:
                     // Chama o especialista em criar magos para fazer seu trabalho.
@@ -106,6 +111,7 @@ public class Menu {
                     running = false;
                     break;
                 default:
+                    // Se o usuário digitar qualquer outro número.
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
@@ -115,9 +121,7 @@ public class Menu {
                 break;
             }
 
-            // A CADA AÇÃO COMPLETADA, O JOGO AVANÇA E VERIFICA A AGENDA
-            
-            // Avança o tempo do jogo em um turno.
+            // A cada ação completada no menu, o tempo do jogo avança.
             relogio.avancarTurno();
 
             // Após avançar o turno, verifica na agenda se há algum duelo marcado para o
@@ -125,10 +129,10 @@ public class Menu {
             List<Agendamento> duelosDoTurno = gerenciadorAgendamentos
                     .verificarEObterAgendamentosParaTurno(relogio.getTurnoAtual());
 
-            // Se a lista não estiver vazia, significa que temos um ou mais duelos para hoje.
+            // Se a lista de duelos para o turno não estiver vazia...
             if (!duelosDoTurno.isEmpty()) {
-                System.out.println("\n--- ATENÇÃO! UM DUELO AGENDADO ESTÁ COMEÇANDO! ---");
-                // Passa por cada duelo agendado.
+                System.out.println("\n ATENÇÃO! Um duelo agendado está começando! ");
+                // Passa por cada duelo agendado para hoje.
                 for (Agendamento ag : duelosDoTurno) {
                     System.out.println("Iniciando duelo agendado na arena: " + ag.getArena().getNome());
 

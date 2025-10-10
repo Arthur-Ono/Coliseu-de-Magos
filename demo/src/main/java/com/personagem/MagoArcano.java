@@ -2,16 +2,28 @@ package com.personagem;
 
 public class MagoArcano extends Ranqueados {
 
+    /**
+     * CONSTRUTOR 1: O Construtor de "Nascimento".
+     * Usado pelo CriadorDeMagos.
+     */
+    public MagoArcano(int id, String codinome, int vidaMax, int manaMax, String foco, int poderBase, 
+                      int resistencia, int controlador, int horaEntrada, int velocidade) {
+        
+        // Chama o construtor da classe mãe (Ranqueados), definindo a escola como "Arcano".
+        super(id, codinome, "Arcano", vidaMax, manaMax, foco, poderBase, resistencia, controlador, 
+              horaEntrada, velocidade, 0, 0, 0, 0, 0, 0);
+    }
 
-    public MagoArcano(int id, String codinome, int vidaMax, int manaMax, String foco, int poderBase, int resistencia, int controlador, int velocidade) {
-        super(id, codinome, "Arcano", vidaMax, manaMax, foco, poderBase, resistencia, controlador, 2, 0, 0, 0, 0, 0, 0, 0);
-        this.setVelocidade(velocidade);
-        this.setEscola("Arcano");
-        this.setAbates(0);
-        this.setCapturas(0);
-        this.setDanoCausado(0);
-        this.setDanoMitigado(0);
-        this.setAssistencias(0);
-        this.setRupturas(0);
+    /**
+     * CONSTRUTOR 2: O Construtor de "Carregamento".
+     * Usado pelo GerenciadorCSV.
+     */
+    public MagoArcano(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
+                      int resistencia, int controlador, int horaEntrada, int velocidade, int abates, int assistencias, 
+                      int danoCausado, int danoMitigado, int rupturas, int capturas) {
+        
+        // Passa todos os dados para o construtor da classe mãe (Ranqueados).
+        super(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada,
+              velocidade, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
     }
 }

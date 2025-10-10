@@ -16,7 +16,6 @@ public class GerenciadorDeAgendamentos {
     // Método para adicionar um novo "lembrete" de duelo na caderneta.
     public void adicionarAgendamento(Agendamento novoAgendamento) {
         this.agendamentos.add(novoAgendamento);
-        // Deixei a mensagem de sucesso que seu amigo colocou, é uma boa confirmação para o usuário.
         System.out.println("✅ Duelo agendado com sucesso para o turno " + novoAgendamento.getTurnoAgendado() + "!");
     }
 
