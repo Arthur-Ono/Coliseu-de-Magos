@@ -244,7 +244,27 @@ public class OrganizadorDeDuelos extends Servicos {
                                 sofreuRuptura.remove(atacante);
                                 continue;
                             }
-                        } else {
+                        }else if (magiaSelecionada instanceof com.feitico.Area) {
+                            // se o mago for da escolha sombrio ele drena 5 de mana com esse negocio abaixo
+                            if ("Sombrio".equalsIgnoreCase(atacante.getEscola())) {
+                                for (Ranqueados alvoArea : alvosVivos) {
+                                    alvoArea.setManaAtual(Math.max(0, alvoArea.getManaAtual()-5));
+                                    System.out.println(alvoArea.getCodinome()+"Teve sua mana drenada em 5 pontos!");
+                                }
+                            }
+                            // causa o dano a todos os inimigos e verifica se há alguem canalizando e ainda faz ruptura nele, loucura essa batalha.
+                            for (Ranqueados alvoArea : alvosVivos) {
+                                atacante.causarDano(alvoArea,magiaSelecionada);
+                                ultimoAlvoAtacado.put(atacante, alvoArea);
+                                if (canalizando.containsKey(alvoArea)) {
+                                    sofreuRuptura.put(alvoArea, true);
+                                    System.out.println("A canalização de " +alvoArea.getCodinome()+" foi interrompida!");
+                                    atacante.setRupturas(atacante.getRupturas()+1);
+                                    
+                                }
+                            }
+                        }
+                         else {
                             atacante.causarDano(alvo, magiaSelecionada);
                         }
 
