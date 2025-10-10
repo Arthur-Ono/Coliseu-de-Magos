@@ -8,7 +8,7 @@ import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.*;
 import com.feitico.Magia;
-import com.personagem.Ranqueados;
+import com.personagem.*;
 import com.feitico.Magia;
 
 public class OrganizadorDeDuelos extends Servicos {
