@@ -1,8 +1,8 @@
 package com.example;
 
 
+import com.Menu.ColiseuGUI;
 import com.GerenciadorDeMagos.Gerenciador;
-
 import com.Menu.Menu;
 import com.personagem.MagoElemental;
 
@@ -29,6 +29,8 @@ public class Main {
 
         // m1.imprimirRanking();
         // m2.imprimirRanking();
+        
         menu.menuPrincipal(gerenciador);
+        //ColiseuGUI.main(args);
     }
 }

@@ -5,25 +5,33 @@ import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.Arena;
+import com.personagem.Personagem; // Import necessário para o cast
 import com.personagem.Ranqueados;
 import com.Agenda.Agendamento;
 import com.Agenda.GerenciadorDeAgendamentos;
 import com.Mapas.GerenciadorDeArenas;
 
+// Esta classe é um "especialista" com a única tarefa de guiar o usuário
+// no processo de agendar um duelo para um turno futuro.
 public class AgendadorDeDuelo extends Servicos {
 
-    // Atributos para guardar as ferramentas que este especialista precisa.
+    // Atributos específicos deste especialista, para ele poder conversar
+    // com a "secretária" (GerenciadorDeAgendamentos) e o "relógio" do jogo (ControladorDeTurno).
     private GerenciadorDeAgendamentos gerenciadorAgendamentos;
     private ControladorDeTurno controladorDeTurno;
 
-    // Construtor que recebe as ferramentas e as guarda nos atributos.
+    // O construtor que o Menu usa para criar este especialista.
+    // Ele recebe todas as ferramentas de que precisa para trabalhar.
     public AgendadorDeDuelo(Scanner scanner, Gerenciador gerenciador, GerenciadorDeAgendamentos ga, ControladorDeTurno ct) {
+        // 'super' passa o scanner e o gerenciador para a classe mãe 'Servicos' guardar.
         super(scanner, gerenciador);
+        // Guarda as outras ferramentas nos atributos desta classe.
         this.gerenciadorAgendamentos = ga;
         this.controladorDeTurno = ct;
     }
 
     @Override
+    // O método principal que é chamado pelo Menu.
     public void executar() {
         System.out.println("\n--- AGENDAMENTO DE DUELO ---");
         
@@ -57,7 +65,7 @@ public class AgendadorDeDuelo extends Servicos {
             return;
         }
 
-        // Chama o método 'montarTime' para criar os dois times.
+        // Chama o método "ajudante" para criar os dois times.
         List<Ranqueados> time1 = montarTime(1, tamanho);
         List<Ranqueados> time2 = montarTime(2, tamanho);
 
@@ -77,17 +85,25 @@ public class AgendadorDeDuelo extends Servicos {
             return;
         }
         
-        // Calcula em qual turno o duelo vai acontecer.
+        // Calcula em qual turno do jogo o duelo vai de fato acontecer.
         int turnoFinal = this.controladorDeTurno.getTurnoAtual() + turnosNoFuturo;
 
-        // Cria o objeto de agendamento com todas as informações.
+        // Antes de criar o agendamento, pergunta para a "secretária" se já não tem algo marcado
+        // para aquela arena e aquele turno.
+        if (this.gerenciadorAgendamentos.isArenaOcupada(arenaEscolhida, turnoFinal)) {
+            System.out.println("ERRO: A arena '" + arenaEscolhida.getNome() + "' já está reservada para o turno " + turnoFinal + ".");
+            System.out.println("Agendamento cancelado.");
+            return;
+        }
+
+        // Se a arena estiver livre, cria o objeto de agendamento.
         Agendamento novoAgendamento = new Agendamento(time1, time2, arenaEscolhida, turnoFinal);
-        // Adiciona o novo agendamento na lista de agendamentos pendentes.
+        // Envia o "lembrete" para a "secretária" guardar.
         this.gerenciadorAgendamentos.adicionarAgendamento(novoAgendamento);
         System.out.println("Duelo agendado com sucesso para o turno " + turnoFinal + "!");
     }
     
-    // Método ajudante para montar um time.
+    // Método ajudante para montar um time. Fica 'private' porque só é usado aqui dentro.
     private List<Ranqueados> montarTime(int numeroDoTime, int tamanhoDoTime) {
         List<Ranqueados> time = new ArrayList<>();
         System.out.println("\n--- Montando Time " + numeroDoTime + " ---");
@@ -96,9 +112,11 @@ public class AgendadorDeDuelo extends Servicos {
             System.out.print("Digite o ID do " + i + "º mago do Time " + numeroDoTime + ": ");
             int idMago = this.scanner.nextInt();
             this.scanner.nextLine();
-            // Busca o mago pelo ID fornecido.
-            Ranqueados magoSelecionado = this.gerenciador.buscarPorId(idMago);
-            // Valida se o mago existe.
+            
+            // Busca o mago pelo ID. O 'buscarPorId' retorna um Personagem,
+            // então precisamos fazer o "cast" (conversão) para Ranqueados.
+            Ranqueados magoSelecionado = (Ranqueados) this.gerenciador.buscarPorId(idMago);
+
             if (magoSelecionado == null) {
                 System.out.println("ERRO: Mago com ID " + idMago + " não encontrado. Montagem de time cancelada.");
                 return null;
