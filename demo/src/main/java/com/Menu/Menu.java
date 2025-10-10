@@ -101,7 +101,15 @@ public class Menu {
                     criadorDeMagias.executar();
                     break;
                 case 9:
-                    
+                    System.out.print("Digite o ID do mago para imprimir o relatório: ");
+                    int idBusca = scan.nextInt();
+                    scan.nextLine(); // Limpa o buffer
+                    Ranqueados magoEncontrado = gerenciador.buscarPorId(idBusca);
+                    if (magoEncontrado != null) {
+                        magoEncontrado.imprimirRanking();
+                    } else {
+                        System.out.println("Mago não encontrado!");
+                    }
                     break;
 
                 case 0:

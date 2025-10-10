@@ -18,8 +18,6 @@ public class ColiseuGUI extends JFrame {
     private ControladorDeTurno relogio = new ControladorDeTurno();
     private GerenciadorDeAgendamentos gerenciadorAgendamentos = new GerenciadorDeAgendamentos();
 
-    private CriadorDeMagos criadorDeMagos = new CriadorDeMagos(new Scanner(System.in), gerenciador);
-    private ListadorDeMagos listadorDeMagos = new ListadorDeMagos(gerenciador, new Scanner(System.in));
     private OrganizadorDeDuelos organizadorDeDuelos = new OrganizadorDeDuelos(new Scanner(System.in), gerenciador);
     private BuscadorDeMagos buscadorDeMagos = new BuscadorDeMagos(gerenciador, new Scanner(System.in));
     private AgendadorDeDuelo agendadorDeDuelo = new AgendadorDeDuelo(new Scanner(System.in), gerenciador, gerenciadorAgendamentos, relogio);
@@ -57,14 +55,11 @@ public class ColiseuGUI extends JFrame {
         add(panel);
 
         // Adaptação dos botões para chamar os serviços do sistema
-        btnCriarMago.addActionListener(e -> criadorDeMagos.executar());
-        btnListarMagos.addActionListener(e -> listadorDeMagos.executar());
+        btnCriarMago.addActionListener(e -> new CriarMagosGUI(gerenciador));
+        btnListarMagos.addActionListener(e -> new ListarMagosGUI(gerenciador));
         btnAgendarDuelo.addActionListener(e -> agendadorDeDuelo.executar());
         btnDueloImediato.addActionListener(e -> organizadorDeDuelos.executar());
-        btnSalvarCSV.addActionListener(e -> {
-            gerenciadorCSV.salvar(gerenciador.listarTodos(), NOME_ARQUIVO);
-            JOptionPane.showMessageDialog(this, "Magos salvos com sucesso em " + NOME_ARQUIVO);
-        });
+        btnSalvarCSV.addActionListener(e -> new SalvarMagoGUI(gerenciador, gerenciadorCSV, NOME_ARQUIVO));
         btnCarregarCSV.addActionListener(e -> {
             java.util.List<Ranqueados> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
             gerenciador.setListaDeMagos(magosCarregados);

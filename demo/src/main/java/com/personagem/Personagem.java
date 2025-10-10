@@ -15,10 +15,11 @@ public abstract class Personagem {
     private int vidaAtual = vidaMax;
     private int manaAtual = manaMax;
     private int velocidade;
+    private float acerto;
+    private float critico;
  
 
-    public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase,
-                      int resistencia, int controlador, int horaEntrada, int velocidade) {
+    public Personagem(int id, String codinome, String escola, int vidaMax, int manaMax, String foco, int poderBase, int resistencia, int controlador, int horaEntrada, int velocidade, float acerto, float critico) {
         this.id = id;
         this.codinome = codinome;
         this.escola = escola;
@@ -33,7 +34,33 @@ public abstract class Personagem {
         
         this.vidaAtual = vidaMax;
         this.manaAtual = manaMax;
+        this.acerto = acerto;
+        this.critico= critico;
+
+
+
     }
+
+    
+    public float getAcerto() {
+        return acerto;
+    }
+
+
+    public void setAcerto(float acerto) {
+        this.acerto = acerto;
+    }
+
+
+    public float getCritico() {
+        return critico;
+    }
+
+
+    public void setCritico(float critico) {
+        this.critico = critico;
+    }
+
 
     public int getVelocidade() {
         return velocidade;

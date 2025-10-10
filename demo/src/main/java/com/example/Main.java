@@ -8,7 +8,7 @@ import com.Menu.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Gerenciador gerenciador = new Gerenciador();
+       Gerenciador gerenciador = new Gerenciador();
         Menu menu = new Menu();
         // Personagem p1 = new Personagem(12,"1","Elemental",2,2,"Cajado",1,2,2,2);
         // Personagem p2 = new Personagem(13,"1","2",25,2,"2",2,2,2,2);
