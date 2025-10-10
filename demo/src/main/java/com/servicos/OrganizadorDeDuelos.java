@@ -16,17 +16,17 @@ public class OrganizadorDeDuelos extends Servicos {
         super(scanner, gerenciador);
     }
 
-    public void aplicarCondicaoDeCampo(Ranqueados mago, CondicaoDeCampo condicao){
+    public void aplicarCondicaoDeCampo(Ranqueados mago, CondicaoDeCampo condicao) {
         switch (condicao.getNome()) {
-        case "AUMENTA_DANO":
-            mago.setPoderBase(mago.getPoderBase() + 10);
-            break;
-        case "AUMENTA_DEFESA":
-            mago.setResistencia(mago.getResistencia() + 10);
-            break;
-        case "REDUZ_VELOCIDADE":
-            mago.setVelocidade(Math.max(1, mago.getVelocidade() - 5));
-            break;
+            case "AUMENTA_DANO":
+                mago.setPoderBase(mago.getPoderBase() + 10);
+                break;
+            case "AUMENTA_DEFESA":
+                mago.setResistencia(mago.getResistencia() + 10);
+                break;
+            case "REDUZ_VELOCIDADE":
+                mago.setVelocidade(Math.max(1, mago.getVelocidade() - 5));
+                break;
         }
     }
 
@@ -151,8 +151,7 @@ public class OrganizadorDeDuelos extends Servicos {
                             Ranqueados p = adversarios.get(i);
                             if (p.getVidaAtual() > 0) {
                                 alvosVivos.add(p);
-                                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: "
-                                        + p.getVidaAtual() + ")");
+                                System.out.println((alvosVivos.size()) + " - " + p.getCodinome() + " (Vida: "+ p.getVidaAtual() + ")");
 
                             }
                         }
@@ -181,8 +180,7 @@ public class OrganizadorDeDuelos extends Servicos {
                         System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
                         for (int i = 0; i < grimorio.size(); i++) {
                             Magia m = grimorio.get(i);
-                            System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
-                                    + m.calcularDano(atacante.getEscola(), atacante.getPoderBase()));
+                            System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: " + m.calcularDano(atacante.getEscola(), atacante.getPoderBase()));
                         }
 
                         // escolhe a magia ou ataque básico
@@ -212,9 +210,7 @@ public class OrganizadorDeDuelos extends Servicos {
                                     System.out.println("(0) Ataque básico| Poder base: " + atacante.getPoderBase());
                                     for (int i = 0; i < grimorio.size(); i++) {
                                         Magia m = grimorio.get(i);
-                                        System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: "
-                                                + m.calcularDano(atacante.getEscola(), atacante.getPoderBase())
-                                                + " | Mana: " + m.getCustoMana());
+                                        System.out.println("(" + (i + 1) + ") " + m.getNome() + "| Dano: " + m.calcularDano(atacante.getEscola(), atacante.getPoderBase()) + " | Mana: " + m.getCustoMana());
                                     }
                                     escolhaAtaque = scanner.nextInt();
                                     scanner.nextLine();
@@ -235,15 +231,13 @@ public class OrganizadorDeDuelos extends Servicos {
                             if (!canalizando.containsKey(atacante)) {
                                 canalizando.put(atacante, magiaSelecionada);
                                 sofreuRuptura.put(atacante, false);
-                                System.out.println(atacante.getCodinome() + " começou a canalizar "
-                                        + magiaSelecionada.getNome() + "!");
+                                System.out.println(atacante.getCodinome() + " começou a canalizar "+ magiaSelecionada.getNome() + "!");
                                 continue;
                             } else if (canalizando.containsKey(atacante) && !sofreuRuptura.get(atacante)) {
                                 atacante.causarDano(alvo, magiaSelecionada);
                                 canalizando.remove(atacante);
                                 sofreuRuptura.remove(atacante);
-                                System.out.println(atacante.getCodinome() + " lançou a magia canalizada "
-                                        + magiaSelecionada.getNome() + "!");
+                                System.out.println(atacante.getCodinome() + " lançou a magia canalizada "+ magiaSelecionada.getNome() + "!");
                             } else if (sofreuRuptura.get(atacante)) {
                                 System.out.println("A canalização de " + atacante.getCodinome() + " foi rompida!");
                                 canalizando.remove(atacante);
@@ -260,8 +254,8 @@ public class OrganizadorDeDuelos extends Servicos {
                         // Se o alvo estava canalizando, sofre ruptura
                         if (canalizando.containsKey(alvo)) {
                             sofreuRuptura.put(alvo, true);
-                            System.out
-                                    .println("A canalização de " + alvo.getCodinome() + " foi rompida por um ataque!");
+                            System.out.println("A canalização de " + alvo.getCodinome() + " foi rompida por um ataque!");
+                            atacante.setRupturas(atacante.getRupturas()+1);
                         }
 
                     } else if (acao == 2) {
