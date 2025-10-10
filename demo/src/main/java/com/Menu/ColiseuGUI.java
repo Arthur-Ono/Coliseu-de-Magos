@@ -58,7 +58,7 @@ public class ColiseuGUI extends JFrame {
         btnCriarMago.addActionListener(e -> new CriarMagosGUI(gerenciador));
         btnListarMagos.addActionListener(e -> new ListarMagosGUI(gerenciador));
         btnAgendarDuelo.addActionListener(e -> agendadorDeDuelo.executar());
-        btnDueloImediato.addActionListener(e -> organizadorDeDuelos.executar());
+        btnDueloImediato.addActionListener(e -> new DueloGUI(gerenciador));
         btnSalvarCSV.addActionListener(e -> new SalvarMagoGUI(gerenciador, gerenciadorCSV, NOME_ARQUIVO));
         btnCarregarCSV.addActionListener(e -> {
             java.util.List<Ranqueados> magosCarregados = gerenciadorCSV.carregar(NOME_ARQUIVO);
