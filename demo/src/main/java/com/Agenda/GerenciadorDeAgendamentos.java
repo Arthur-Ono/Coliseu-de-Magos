@@ -20,7 +20,7 @@ public class GerenciadorDeAgendamentos {
         System.out.println("✅ Duelo agendado com sucesso para o turno " + novoAgendamento.getTurnoAgendado() + "!");
     }
 
-    // Este método verifica se uma arena já está ocupada em um turno específico.
+    // Novo método para verificar se uma arena está ocupada em um turno específico.
     // Retorna 'true' se a arena estiver ocupada, 'false' se estiver livre.
     public boolean isArenaOcupada(Arena arenaParaVerificar, int turnoParaVerificar) {
         // Percorre cada agendamento na "caderneta".
