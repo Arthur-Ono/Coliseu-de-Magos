@@ -15,8 +15,12 @@ public class Area extends Magia {
     @Override
     public int calcularDano(String classeMago, int poderBase) {
     int dano = poderBase + (15 * poderBase) / 100;
-    if ("Arcano".equalsIgnoreCase(classeMago)) {
-        dano += 10;
+    if ("Elemental".equalsIgnoreCase(classeMago)) {
+        dano += 15;
+    }
+    if ("Sombrio".equalsIgnoreCase(classeMago)) {
+        dano +=5;
+        
     }
     return dano;
 }

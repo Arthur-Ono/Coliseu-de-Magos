@@ -101,7 +101,7 @@ public class Menu {
                     criadorDeMagias.executar();
                     break;
                 case 9:
-                    
+
                     break;
 
                 case 0:

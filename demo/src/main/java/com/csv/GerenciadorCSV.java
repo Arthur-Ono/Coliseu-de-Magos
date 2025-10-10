@@ -99,18 +99,21 @@ public class GerenciadorCSV {
                 int danoMitigado = Integer.parseInt(dados[15]);
                 int rupturas = Integer.parseInt(dados[16]);
                 int capturas = Integer.parseInt(dados[17]);
+                float acerto = Float.parseFloat(dados[18]);
+                float critico = Float.parseFloat(dados[19]);
+                int tempoEmCombate = Integer.parseInt(dados[20]);
                 
                 // A variável 'mago' é do tipo Ranqueados.
                 Ranqueados mago = null;
                 switch (tipo) {
                     case "MagoElemental":
-                        mago = new MagoElemental(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
+                        mago = new MagoElemental(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade,acerto, critico, abates ,assistencias, danoCausado, danoMitigado, rupturas, capturas, tempoEmCombate);
                         break;
                     case "MagoSombrio":
-                        mago = new MagoSombrio(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
+                        mago = new MagoSombrio(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade,acerto, critico, abates ,assistencias, danoCausado, danoMitigado, rupturas, capturas, tempoEmCombate);
                         break;
                     case "MagoArcano":
-                        mago = new MagoArcano(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade, abates, assistencias, danoCausado, danoMitigado, rupturas, capturas);
+                        mago = new MagoArcano(id, codinome, escola, vidaMax, manaMax, foco, poderBase, resistencia, controlador, horaEntrada, velocidade,acerto, critico, abates ,assistencias, danoCausado, danoMitigado, rupturas, capturas, tempoEmCombate);
                         break;
                 } 
                 
