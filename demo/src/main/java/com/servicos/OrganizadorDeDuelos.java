@@ -294,6 +294,11 @@ public class OrganizadorDeDuelos extends Servicos {
 
             // Lógica de final de turno (veneno, etc)
 
+            for (Ranqueados mago : ordemTurno) {
+                if (mago.getVidaAtual()>0) {
+                    mago.setTempoEmCombate(mago.getTempoEmCombate()+1);
+                }
+            }
             turno++;
             // Quando tu terminares o ngc de dano remove esse break aqui. ele serve só pro
             // esqueleto não ficar em loop
