@@ -16,6 +16,34 @@ public class OrganizadorDeDuelos extends Servicos {
         super(scanner, gerenciador);
     }
 
+    public void aplicarCondicaoDeCampo(Ranqueados mago, CondicaoDeCampo condicao){
+        switch (condicao.getNome()) {
+        case "AUMENTA_DANO":
+            mago.setPoderBase(mago.getPoderBase() + 10);
+            break;
+        case "AUMENTA_DEFESA":
+            mago.setResistencia(mago.getResistencia() + 10);
+            break;
+        case "REDUZ_VELOCIDADE":
+            mago.setVelocidade(Math.max(1, mago.getVelocidade() - 5));
+            break;
+        }
+    }
+
+    private void removerCondicaoDeCampo(Ranqueados mago, CondicaoDeCampo condicao) {
+        switch (condicao.getNome()) {
+            case "AUMENTA_DANO":
+                mago.setPoderBase(mago.getPoderBase() - 10);
+                break;
+            case "AUMENTA_DEFESA":
+                mago.setResistencia(mago.getResistencia() - 10);
+                break;
+            case "REDUZ_VELOCIDADE":
+                mago.setVelocidade(mago.getVelocidade() + 5);
+                break;
+        }
+    }
+
     @Override
     public void executar() {
         System.out.println("\n----- DUELO IMEDIATO -----");
@@ -71,13 +99,19 @@ public class OrganizadorDeDuelos extends Servicos {
         ordemTurno.addAll(time2);
         ordemTurno.sort((a, b) -> Integer.compare(b.getVelocidade(), a.getVelocidade()));
 
-        System.out.println("\n💥 O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! 💥");
+        System.out.println("\n----| O DUELO ENTRE TIME 1 E TIME 2 COMEÇOU! |----");
 
+        // Map<> para salvar os estados de cada mago :)
+        Map<Ranqueados, Magia> canalizando = new HashMap<>();
+        Map<Ranqueados, Boolean> sofreuRuptura = new HashMap<>();
         Map<Ranqueados, Integer> defesa = new HashMap<>();
         Map<Ranqueados, Ranqueados> ultimoAlvoAtacado = new HashMap<>();
 
         CondicaoDeCampo condicaoAtiva = arenaEscolhida.sortearCondicao();
         System.out.println("Condição Inicial: " + condicaoAtiva.getNome());
+        for (Ranqueados ranqueados : ordemTurno) {
+            aplicarCondicaoDeCampo(ranqueados, condicaoAtiva);
+        }
 
         int turno = 1;
         while (timeEstaVivo(time1) && timeEstaVivo(time2)) {
@@ -164,7 +198,9 @@ public class OrganizadorDeDuelos extends Servicos {
                         if (escolhaAtaque > 0 && escolhaAtaque <= grimorio.size()) {
                             magiaSelecionada = grimorio.get(escolhaAtaque - 1);
                         }
-
+                        // aqui é pra caso o atacante nao tenha mana suficiente para soltar magia, ai
+                        // ele escolhe outro ataque. Claro, poderia ser outra AÇÃO mas fiquei com
+                        // preguiça kkkk :p
                         boolean ataqueValido = false;
                         while (!ataqueValido) {
                             magiaSelecionada = null;
@@ -193,10 +229,40 @@ public class OrganizadorDeDuelos extends Servicos {
                                 ataqueValido = true;
                             }
                         }
+                        // nessa parte aqui?
+                        if (magiaSelecionada instanceof com.feitico.Canalizado) {
+                            // Se ainda não está canalizando, inicia canalização
+                            if (!canalizando.containsKey(atacante)) {
+                                canalizando.put(atacante, magiaSelecionada);
+                                sofreuRuptura.put(atacante, false);
+                                System.out.println(atacante.getCodinome() + " começou a canalizar "
+                                        + magiaSelecionada.getNome() + "!");
+                                continue;
+                            } else if (canalizando.containsKey(atacante) && !sofreuRuptura.get(atacante)) {
+                                atacante.causarDano(alvo, magiaSelecionada);
+                                canalizando.remove(atacante);
+                                sofreuRuptura.remove(atacante);
+                                System.out.println(atacante.getCodinome() + " lançou a magia canalizada "
+                                        + magiaSelecionada.getNome() + "!");
+                            } else if (sofreuRuptura.get(atacante)) {
+                                System.out.println("A canalização de " + atacante.getCodinome() + " foi rompida!");
+                                canalizando.remove(atacante);
+                                sofreuRuptura.remove(atacante);
+                                continue;
+                            }
+                        } else {
+                            atacante.causarDano(alvo, magiaSelecionada);
+                        }
 
-                        // realiza o ataque
-                        atacante.causarDano(alvo, magiaSelecionada);
+                        // Após o ataque, registre o alvo atacado
                         ultimoAlvoAtacado.put(atacante, alvo);
+
+                        // Se o alvo estava canalizando, sofre ruptura
+                        if (canalizando.containsKey(alvo)) {
+                            sofreuRuptura.put(alvo, true);
+                            System.out
+                                    .println("A canalização de " + alvo.getCodinome() + " foi rompida por um ataque!");
+                        }
 
                     } else if (acao == 2) {
                         atacante.setResistencia(atacante.getResistencia() + atacante.getResistencia() / 2);
@@ -227,6 +293,9 @@ public class OrganizadorDeDuelos extends Servicos {
             System.out.println("🏆 O VENCEDOR É: TIME 2!");
         } else {
             System.out.println("O duelo terminou em empate!");
+        }
+        for (Ranqueados ranqueados : ordemTurno) {
+            removerCondicaoDeCampo(ranqueados, condicaoAtiva);
         }
 
         if (timeEstaVivo(time1)) {

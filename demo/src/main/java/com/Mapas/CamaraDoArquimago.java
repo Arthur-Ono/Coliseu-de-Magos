@@ -12,4 +12,5 @@ public class CamaraDoArquimago extends Arena {
         this.condicoesPossiveis.add(CatalogoDeCondicoes.SOLO_SAGRADO);
         this.condicoesPossiveis.add(CatalogoDeCondicoes.PANTANO_SOMBRIO);
     }
+    
 }
