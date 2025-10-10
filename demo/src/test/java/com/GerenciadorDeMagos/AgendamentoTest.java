@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,8 +56,8 @@ public class AgendamentoTest {
         Scanner scannerFantasma = new Scanner(inputSimulado);
 
         // 2. Crio os magos que o meu 'gerenciadorMock' vai "encontrar".
-        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0);
-        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         // 3. "Ensino" os mocks a se comportarem.
         when(gerenciadorMock.buscarPorId(101)).thenReturn(mago1);
@@ -96,8 +95,8 @@ public class AgendamentoTest {
         Scanner scannerFantasma = new Scanner(inputSimulado);
 
         // 2. Preparo os magos.
-        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0);
-        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         // 3. "Ensino" os mocks, e aqui está a parte crucial:
         when(gerenciadorMock.buscarPorId(101)).thenReturn(mago1);
@@ -145,8 +144,8 @@ public class AgendamentoTest {
         String inputSimulado = "1\n" + "1\n" + "101\n" + "202\n" + "-5\n";
         Scanner scannerFantasma = new Scanner(inputSimulado);
         
-        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0);
-        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago1 = new MagoElemental(101, "Gandalf", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Ranqueados mago2 = new MagoElemental(202, "Saruman", "Elemental", 100, 100, "Cajado", 50, 30, 1, 1, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         when(gerenciadorMock.buscarPorId(101)).thenReturn(mago1);
         when(gerenciadorMock.buscarPorId(202)).thenReturn(mago2);
 

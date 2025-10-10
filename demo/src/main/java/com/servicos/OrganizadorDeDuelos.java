@@ -11,7 +11,6 @@ import com.personagem.Personagem;
 import com.personagem.Ranqueados;
 import com.IA.AcaoIA;
 import com.IA.LogicaIA;
-import com.IA.TipoAcao;
 import com.feitico.Magia;
 
 // Esta é a classe mais importante do combate. Ela é o "juiz" ou "mestre de cerimônias"
@@ -355,11 +354,19 @@ public class OrganizadorDeDuelos extends Servicos {
         }
 
         System.out.println("\n--- FIM DO DUELO ---");
-        // ... (lógica de vencedor e ranking) ...
+        
+        List<Ranqueados> timeVencedor = timeEstaVivo(time1) ? time1 : time2;
+        for (Ranqueados mago : timeVencedor) {
+            mago.setCapturas(mago.getCapturas() + 1);
+        }
+
         for (Ranqueados ranqueado : ordemTurno) {
             removerCondicaoDeCampo(ranqueado, condicaoAtiva);
         }
-        // ...
+        for (Ranqueados ranqueado : ordemTurno) {
+            ranqueado.incrementarRanking(ranqueado, new ArrayList<>(ordemTurno));
+        }
+        
         System.out.println("\nPressione Enter para continuar...");
         this.scanner.nextLine();
     }
@@ -394,7 +401,7 @@ public class OrganizadorDeDuelos extends Servicos {
         }
         return time;
     }
-
+    /* 
     private Ranqueados escolherAlvo(List<Ranqueados> adversarios) {
         List<Ranqueados> alvosVivos = new ArrayList<>();
         System.out.println("Magos vivos do time adversário:");
@@ -445,7 +452,7 @@ public class OrganizadorDeDuelos extends Servicos {
         if (escolhaAtaque == 0) {
             return null;
         }
-
+        
         Magia magiaSelecionada = grimorio.get(escolhaAtaque - 1);
 
         if (atacante.getManaAtual() < magiaSelecionada.getCustoMana()) {
@@ -456,7 +463,7 @@ public class OrganizadorDeDuelos extends Servicos {
         atacante.setManaAtual(atacante.getManaAtual() - magiaSelecionada.getCustoMana());
         return magiaSelecionada;
     }
-    
+    */
     private boolean timeEstaVivo(List<Ranqueados> time) {
         for (Ranqueados p : time) {
             if (p.getVidaAtual() > 0) {

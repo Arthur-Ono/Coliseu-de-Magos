@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Mapas.Arena;
-import com.personagem.Personagem; // Import necessário para o cast
 import com.personagem.Ranqueados;
 import com.Agenda.Agendamento;
 import com.Agenda.GerenciadorDeAgendamentos;

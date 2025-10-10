@@ -158,7 +158,8 @@ public abstract class Personagem {
         this.horaEntrada = horaEntrada;
     }
 
-    public void receberDano(int poderBase) {
+    public int receberDano(int poderBase) {
+        return 0;
     }
 
     public void causarDano(Personagem alvo) {
