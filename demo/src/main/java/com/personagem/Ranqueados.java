@@ -2,9 +2,9 @@ package com.personagem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import com.GerenciadorDeMagos.Gerenciador;
+
+
 import com.feitico.Magia;
 import com.feitico.Projetil;
 
@@ -166,13 +166,13 @@ public abstract class Ranqueados extends Personagem {
     }
 
 
-    public void receberDano(int poderBase) {
-        int x = 0;
-        x = poderBase - super.getResistencia();
+    public int receberDano(int poderBase) {
+        int x = poderBase - super.getResistencia();
         if (x < 0) {
             x = 0;
         }
-
+        int mitigado = poderBase-x;
+        setContadorMitigado(getContadorMitigado()+mitigado);
         System.out.println("----------------------------");
 
         System.out.println("Mago " + super.getCodinome() + " leva " + x + " de dano!");
@@ -188,11 +188,12 @@ public abstract class Ranqueados extends Personagem {
             setContadorAbate(1);
         }
 
+        return x;
         // contadores abaixo
         // lembrar que são referentes QUEM ESTÁ ATACANDO
 
         //setContadorDano(getContadorDano() + x);
-        System.out.println("Dano causado total :" + contadorDano);
+        //System.out.println("Dano causado total :" + contadorDano);
 
     }
 
@@ -240,72 +241,49 @@ public abstract class Ranqueados extends Personagem {
             setAcerto(getAcerto()+1);
         }
         // ataca ne
-        alvo.receberDano(dano);
-
-        setContadorDano(getContadorDano()+dano);
+        
+        int danoEfetivo = alvo.receberDano(dano);
+        setContadorDano(getContadorDano()+danoEfetivo);
+        System.out.println("Dano causado total :" + getContadorDano());
     }
 
     public void incrementarRanking(Ranqueados alvo, ArrayList<Ranqueados> todosMagos) {
-        // incremento de abate
+        // Abate e assistência
         if (alvo.getContadorAbate() == 1) {
-            setAbates(getAbates() + 1);
-            int idAssistente = alvo.getContadorUltimoAtacante();
-            if (idAssistente != -1 && idAssistente != this.getId()) {
-                for (Ranqueados mago : todosMagos) {
-                    if (mago.getId() == idAssistente) {
-                        mago.setAssistencias(mago.getAssistencias() + 1);
-                        break;
-                    }
+            int idMatador = alvo.getContadorUltimoAtacante();
+            // Matador recebe abate
+            for (Ranqueados mago : todosMagos) {
+                if (mago.getId() == idMatador) {
+                    mago.setAbates(mago.getAbates() + 1);
                 }
             }
-
-            alvo.contadorAbate = 0;
+           
+            alvo.setContadorAbate(0);
             alvo.setContadorUltimoAtacante(-1);
         }
-        // incrementa o dano causado
+
+        // Dano causado
         setDanoCausado(getDanoCausado() + getContadorDano());
         setContadorDano(0);
 
-        // incrementa dano mitigado
-        int poder = this.getPoderBase();
-        int resistencia = alvo.getResistencia();
-        int mitigado = Math.min(poder, resistencia);
-        if (mitigado < 0) {
-            mitigado = 0;
-        }
-        alvo.setDanoMitigado(alvo.getDanoMitigado() + mitigado);
-
+        
+        alvo.setDanoMitigado(alvo.getDanoMitigado() + alvo.getContadorMitigado());
+        alvo.setContadorMitigado(0);
     }
 
     public void imprimirRanking() {
-        Gerenciador gerenciador = new Gerenciador();
-        Scanner scanner= new Scanner(System.in); 
-        System.out.println("\n ---- Gerenciador do grimório ---");
-        System.out.print("Digite o ID do mago: ");
-        int idMago = scanner.nextInt();
-        scanner.nextLine();
-        Ranqueados mago = gerenciador.buscarPorId(idMago);
-        while (mago == null) {
-            System.out.println("Mago não encontrado");
-            System.out.println("Digite o ID do mago: ");
-            idMago = scanner.nextInt();
-            scanner.nextLine();
-            mago = gerenciador.buscarPorId(idMago);
-        }
-
-
         System.out.println("------------");
-        System.out.println("\nCodinome: " + mago.getCodinome());
-        System.out.println("\nAbates: " + mago.getAbates());
-        System.out.println("\nAssistências: " + mago.getAssistencias());
-        System.out.println("\nDano causado: " + mago.getDanoCausado());
-        System.out.println("\nDano mitigado: " + mago.getDanoMitigado());
-        System.out.println("\nCapturas de objetivo: " + mago.getCapturas());
-        System.out.println("\nRupturas de canalização: " + mago.getRupturas());
-        System.out.println("\nTempo em combate: "+mago.getTempoEmCombate());
-        System.out.println("\nAcertos: "+mago.getAcerto());
-        System.out.println("\nCriticos: "+mago.getCritico());
-        System.out.println("\nEficiência de mana: " + ((mago.getManaGasta() > 0) ? ((double)mago.getDanoCausado() / mago.getManaGasta()) : 0));
-        scanner.close();
+        System.out.println("Codinome: " + getCodinome());
+        System.out.println("Abates: " + getAbates());
+        System.out.println("Assistências: " + getAssistencias());
+        System.out.println("Dano causado: " + getDanoCausado());
+        System.out.println("Dano mitigado: " + getDanoMitigado());
+        System.out.println("Capturas de objetivo: " + getCapturas());
+        System.out.println("Rupturas de canalização: " + getRupturas());
+        System.out.println("Tempo em combate: " + getTempoEmCombate());
+        System.out.println("Acertos: " + getAcerto());
+        System.out.println("Críticos: " + getCritico());
+        System.out.println("Eficiência de mana: " + ((getManaGasta() > 0) ? ((double)getDanoCausado() / getManaGasta()) : 0));
+        System.out.println("------------");
     }
 }
