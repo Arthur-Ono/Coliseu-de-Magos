@@ -160,7 +160,7 @@ public abstract class Ranqueados extends Personagem {
         // contadores abaixo
         // lembrar que são referentes QUEM ESTÁ ATACANDO
 
-        setContadorDano(getContadorDano() + x);
+        //setContadorDano(getContadorDano() + x);
         System.out.println("Dano causado total :" + contadorDano);
 
     }
@@ -181,6 +181,8 @@ public abstract class Ranqueados extends Personagem {
 
         // ataca ne
         alvo.receberDano(dano);
+
+        setContadorDano(getContadorDano()+dano);
     }
 
     public void incrementarRanking(Ranqueados alvo, ArrayList<Ranqueados> todosMagos) {
