@@ -1,7 +1,7 @@
 package com.example;
 
 
-import com.Menu.ColiseuGUI;
+//import com.Menu.ColiseuGUI;
 import com.GerenciadorDeMagos.Gerenciador;
 import com.Menu.Menu;
 //import com.personagem.MagoElemental;

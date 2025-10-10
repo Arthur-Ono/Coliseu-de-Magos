@@ -1,3 +1,3 @@
 id,codinome,escola,vidaMax,manaMax,foco,poderBase,resistencia,controlador,horaEntrada,velocidade,tipo,abates,assistencias,danoCausado,danoMitigado,rupturas,capturas
-1,arthur,Arcano,20,20,teste foco,30,15,1,1,15,MagoArcano,0,0,0,0,0,0
-2,magosombrio buuu,Sombrio,60,10,nenhum,10,10,1,1,10,MagoSombrio,0,0,0,0,0,0
+1,arthur 1,Elemental,20,10,nada,40,10,1,1,3,MagoElemental,0,0,0,0,0,0
+2,teste,Elemental,40,10,nada,11,10,1,1,1,MagoElemental,0,0,0,0,0,0
